@@ -22,8 +22,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
-                        .loginPage("/login") // Specifies the custom login page URL
-                        .defaultSuccessUrl("/admin", true) // Redirect after successful login
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/admin", true)
                         .permitAll()
                 )
                 .logout(logout -> logout.logoutUrl("/logout").permitAll());
