@@ -16,11 +16,12 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <form action="" class="box" method="post">
+                    <form action="/login" class="box" method="post">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                         <div class="field">
-                            <label class="label">Email</label>
+                            <label class="label">Nickname</label>
                             <div class="control has-icons-left">
-                                <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+                                <input name="username" type="text" placeholder="e.g. bobsmith" class="input" required>
                                 <span class="icon is-small is-left">
                         <i class="fa fa-envelope"></i>
                     </span>
@@ -29,7 +30,7 @@
                         <div class="field">
                             <label class="label">Password</label>
                             <div class="control has-icons-left">
-                                <input type="password" placeholder="*******" class="input" required>
+                                <input name="password" type="password" placeholder="*******" class="input" required>
                                 <span class="icon is-small is-left">
                   <i class="fa fa-lock"></i>
                 </span>
@@ -42,8 +43,7 @@
                             </label>
                         </div>
                         <div class="field">
-                            <button class="button is-success">
-                                Login
+                            <button class="button is-success" type="submit">Login
                             </button>
                         </div>
                     </form>

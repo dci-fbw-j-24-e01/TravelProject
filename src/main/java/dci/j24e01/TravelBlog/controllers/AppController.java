@@ -2,7 +2,6 @@ package dci.j24e01.TravelBlog.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class AppController {
@@ -17,9 +16,9 @@ public class AppController {
         return "login";
     }
 
-    @PostMapping("/admin")
-    public String admin() {
-        System.out.println("tryed to login");
-        return "redirect:/";
+    @GetMapping("/admin_panel")
+    public String adminPanel() {
+        System.out.println("test");
+        return "admin_panel";
     }
 }
