@@ -148,6 +148,28 @@
             </div>
         </div>
     </div>
+    <br>
+    <div id="map" style="width: 100%; height: 500px;"></div>
+    <form method="POST" action="/submit" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+        <input type="file" name="photos" multiple>
+        <textarea name="route" placeholder="Optional Route (GeoJSON)"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        const map = L.map('map').setView([0, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+        let marker;
+        map.on('click', function(e) {
+            if (marker) map.removeLayer(marker);
+            marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('latitude').value = e.latlng.lat;
+            document.getElementById('longitude').value = e.latlng.lng;
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<h1>Admin Dashboard</h1>
+<a href="/logout">Logout</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Route</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="point : ${vacationPoints}">
+        <td th:text="${point.title}"></td>
+        <td th:text="${point.description}"></td>
+        <td th:text="${point.latitude}"></td>
+        <td th:text="${point.longitude}"></td>
+        <td th:text="${point.route}"></td>
+        <td>
+            <form method="POST" action="/admin/delete">
+                <input type="hidden" name="id" th:value="${point.id}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
