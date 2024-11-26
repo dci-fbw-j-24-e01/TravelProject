@@ -14,6 +14,7 @@
         <th>Latitude</th>
         <th>Longitude</th>
         <th>Route</th>
+        <th>Approved</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -24,10 +25,15 @@
         <td th:text="${point.latitude}"></td>
         <td th:text="${point.longitude}"></td>
         <td th:text="${point.route}"></td>
+        <td th:text="${point.approved ? 'Yes' : 'No'}"></td>
         <td>
             <form method="POST" action="/admin/delete">
                 <input type="hidden" name="id" th:value="${point.id}">
                 <button type="submit">Delete</button>
+            </form>
+            <form th:if="${!point.approved}" method="POST" action="/admin/approve">
+                <input type="hidden" name="id" th:value="${point.id}">
+                <button type="submit">Approve</button>
             </form>
         </td>
     </tr>
