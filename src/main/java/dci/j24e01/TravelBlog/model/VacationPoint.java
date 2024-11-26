@@ -25,11 +25,13 @@ public class VacationPoint {
 
     @OneToMany(mappedBy = "vacationPoint", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos;
+    private boolean approved;
+
 
     public VacationPoint() {
     }
 
-    public VacationPoint(Long id, String title, String description, double latitude, double longitude, String route, LocalDateTime createdAt, List<Photo> photos) {
+    public VacationPoint(Long id, String title, String description, double latitude, double longitude, String route, LocalDateTime createdAt, List<Photo> photos, boolean approved) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -38,6 +40,7 @@ public class VacationPoint {
         this.route = route;
         this.createdAt = createdAt;
         this.photos = photos;
+        this.approved = approved;
     }
 
     public Long getId() {
@@ -104,15 +107,23 @@ public class VacationPoint {
         this.photos = photos;
     }
 
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof VacationPoint that)) return false;
-        return Double.compare(latitude, that.latitude) == 0 && Double.compare(longitude, that.longitude) == 0 && Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(route, that.route) && Objects.equals(createdAt, that.createdAt) && Objects.equals(photos, that.photos);
+        return Double.compare(latitude, that.latitude) == 0 && Double.compare(longitude, that.longitude) == 0 && approved == that.approved && Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(route, that.route) && Objects.equals(createdAt, that.createdAt) && Objects.equals(photos, that.photos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, latitude, longitude, route, createdAt, photos);
+        return Objects.hash(id, title, description, latitude, longitude, route, createdAt, photos, approved);
     }
 
     @Override
@@ -126,6 +137,8 @@ public class VacationPoint {
                 ", route='" + route + '\'' +
                 ", createdAt=" + createdAt +
                 ", photos=" + photos +
+                ", approved=" + approved +
                 '}';
     }
 }
+

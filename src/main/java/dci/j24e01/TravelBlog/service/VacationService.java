@@ -39,6 +39,7 @@ public class VacationService {
         vacationPoint.setDescription(description);
         vacationPoint.setLatitude(latitude);
         vacationPoint.setLongitude(longitude);
+        vacationPoint.setApproved(false);
 
         VacationPoint savedPoint = vacationPointRepository.save(vacationPoint);
 
@@ -69,6 +70,12 @@ public class VacationService {
     }
     public void deleteVacationPoint(Long id) {
         vacationPointRepository.deleteById(id);
+    }
+    
+    public void updateApprovalStatus(Long id, boolean approved) {
+        VacationPoint vacationPoint = vacationPointRepository.findById(id).orElseThrow();
+        vacationPoint.setApproved(approved);
+        vacationPointRepository.save(vacationPoint);
     }
 
 }

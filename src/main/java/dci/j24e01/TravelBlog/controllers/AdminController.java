@@ -2,6 +2,7 @@ package dci.j24e01.TravelBlog.controllers;
 
 
 import dci.j24e01.TravelBlog.service.AdminService;
+import dci.j24e01.TravelBlog.service.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,8 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private VacationService vacationService;
 
     @GetMapping
     public String adminPage(Model model) {
@@ -28,6 +31,12 @@ public class AdminController {
     @PostMapping("/delete")
     public String deleteVacationPoint(@RequestParam Long id) {
         adminService.deleteVacationPoint(id);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/approve")
+    public String approveVacationPoint(@RequestParam Long id) {
+        vacationService.updateApprovalStatus(id, true);
         return "redirect:/admin";
     }
 }

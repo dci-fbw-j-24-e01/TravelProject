@@ -1,5 +1,6 @@
 package dci.j24e01.TravelBlog.controllers;
 
+import dci.j24e01.TravelBlog.repository.VacationPointRepository;
 import dci.j24e01.TravelBlog.service.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,13 @@ public class AppController {
 
     @Autowired
     private VacationService vacationService;
+    @Autowired
+    private VacationPointRepository vacationPointRepository;
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("vacationPoints", vacationService.getAllVacationPoints());
+        model.addAttribute("approvedVacationPoints", vacationPointRepository.findAllByApprovedTrue());
         return "index";
     }
 
