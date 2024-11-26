@@ -27,7 +27,7 @@
         <div class="block"></div>
         <h2 class="title is-2">Latest</h2>
         <div class="columns">
-             <div class="column">
+            <div class="column" th:each="point : ${approvedVacationPoints}">
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
@@ -40,7 +40,7 @@
                     <div class="card-content">
                         <div class="media">
                             <div class="media-content">
-                                <p class="title is-4">Hamburg</p>
+                                <p class="title is-4" th:text="${point.title}"></p>
                                 <p class="subtitle is-6">Germany</p>
                             </div>
                         </div>
