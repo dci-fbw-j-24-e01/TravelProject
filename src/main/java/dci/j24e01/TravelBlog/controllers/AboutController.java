@@ -20,7 +20,7 @@ public class AboutController {
     private List<Creator> getCreatorsFromCMS() {
         // Mock or retrieve from CMS
         return List.of(
-                new Creator("Alice Johnson", "Content Writer", "Passionate about travel and storytelling.", "/images/alice.jpg"),
+                new Creator("Alice Johnson", "Content Writer", "Passionate about travel and storytelling. ", "/images/alice.jpg"),
                 new Creator("Bob Smith", "Photographer", "Capturing the world's beauty one shot at a time.", "/images/bob.jpg"),
                 new Creator("Claire Brown", "Editor", "Ensuring quality and consistency in every post.", "/images/claire.jpg")
         );
