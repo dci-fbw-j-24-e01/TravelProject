@@ -11,24 +11,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 
 @Configuration
 public class SecurityConfig {
+    Dotenv dotenv = Dotenv.load();
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
+        String key = dotenv.get("rememberMeKey");
+
         httpSecurity.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/css/**", "/images/**").permitAll();
-            auth.anyRequest().authenticated();
+            auth.requestMatchers("/css/**", "/icons/**", "/fonts/**", "/images/**").permitAll();
+            auth.requestMatchers("/admin").permitAll();
+            auth.requestMatchers("admin_panel").authenticated();
+            auth.anyRequest().permitAll();
         });
 
         httpSecurity.formLogin(form -> form
                 .loginPage("/admin")
+                .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/admin_panel", true)
                 .permitAll()
         );
-//        httpSecurity.formLogin(Customizer.withDefaults());
 
         httpSecurity.logout(logout -> logout
                 .logoutUrl("/logout")
@@ -36,12 +42,16 @@ public class SecurityConfig {
                 .permitAll()
         );
 
+        httpSecurity.rememberMe(rememberMe -> rememberMe
+                .key(key)
+                .tokenValiditySeconds(7 * 24 * 60 * 60)
+                .tokenRepository(tokenRepository()));
+
         return httpSecurity.build();
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        Dotenv dotenv = Dotenv.load();
 
         String username = dotenv.get("ADMIN_LOGIN");
         String password = dotenv.get("ADMIN_PASSWORD");
@@ -53,5 +63,10 @@ public class SecurityConfig {
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(admin);
+    }
+
+    @Bean
+    public InMemoryTokenRepositoryImpl tokenRepository() {
+        return new InMemoryTokenRepositoryImpl();
     }
 }

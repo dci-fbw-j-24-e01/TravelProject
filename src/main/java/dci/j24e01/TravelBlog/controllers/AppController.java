@@ -12,13 +12,13 @@ public class AppController {
     }
 
     @GetMapping("/admin")
-    public String login() {
+    public String admin() {
         return "login";
     }
 
     @GetMapping("/admin_panel")
     public String adminPanel() {
-        System.out.println("test");
+
         return "admin_panel";
     }
 }
