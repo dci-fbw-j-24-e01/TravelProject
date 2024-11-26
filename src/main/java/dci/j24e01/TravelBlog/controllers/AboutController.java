@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+//PROVISIONAL
+
 @Controller
 public class AboutController {
 
@@ -18,7 +20,7 @@ public class AboutController {
     }
 
     private List<Creator> getCreatorsFromCMS() {
-        // Mock or retrieve from CMS
+        // PROVISIONAL MOCKUP
         return List.of(
                 new Creator("Alice Johnson", "Content Writer", "Passionate about travel and storytelling. ", "/images/alice.jpg"),
                 new Creator("Bob Smith", "Photographer", "Capturing the world's beauty one shot at a time.", "/images/bob.jpg"),
