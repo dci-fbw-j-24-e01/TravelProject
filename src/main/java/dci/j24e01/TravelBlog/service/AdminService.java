@@ -1,6 +1,6 @@
 package dci.j24e01.TravelBlog.service;
 
-import dci.j24e01.TravelBlog.model.VacationPoint;
+import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.repository.VacationPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

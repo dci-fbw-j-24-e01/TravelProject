@@ -1,7 +1,7 @@
 package dci.j24e01.TravelBlog.repository;
 
 
-import dci.j24e01.TravelBlog.model.VacationPoint;
+import dci.j24e01.TravelBlog.models.VacationPoint;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

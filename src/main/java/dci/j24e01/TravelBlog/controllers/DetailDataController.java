@@ -35,9 +35,11 @@ public class DetailDataController {
         DetailData detailData = detailDataService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Detail not found"));
 
-        Map<String, Object> weatherData = weatherService.getWeather(detailData.getCityName());
+        // Debugging output
+        System.out.println("Latitude: " + detailData.getLatitude());
+        System.out.println("Longitude: " + detailData.getLongitude());
 
-        // Format the temperature to one decimal place
+        Map<String, Object> weatherData = weatherService.getWeather(detailData.getCityName());
         if (weatherData != null && weatherData.containsKey("main")) {
             Map<String, Object> mainData = (Map<String, Object>) weatherData.get("main");
             if (mainData != null && mainData.containsKey("temp")) {
@@ -53,6 +55,4 @@ public class DetailDataController {
 
         return "detail";
     }
-
-
 }

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/css/main.css">
 
     <title>Travel Blog</title>
+
+
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
@@ -17,34 +19,32 @@
     <div class="container">
         <!-- Location Header -->
         <div class="content has-text-centered">
-            <!-- Importing names of City and Country for Header -->
             <h1 class="title" th:text="${detailData.cityName} + ', ' + ${detailData.countryName}">City, Country</h1>
             <p class="subtitle">
                 <span class="icon"><i class="fas fa-calendar-alt"></i></span>
-                <!-- Importing dates for Header -->
-                from <strong th:text="${detailData.startDate}">Start Date</strong> to <strong th:text="${detailData.endDate}">End Date</strong>
+                from <strong th:text="${detailData.startDate}">Start Date</strong> to <strong
+                    th:text="${detailData.endDate}">End Date</strong>
             </p>
         </div>
 
-        <!-- Image Gallery -->
-        <div class="columns is-centered">
-            <div class="column is-half">
-                <div class="card">
-                    <div class="card-image">
-                        <div class="image-gallery">
-                            <!-- Importing Image Gallery -->
-                            <figure class="image is-16by9" th:each="url : ${detailData.photos}">
-                                <img th:src="${url.photoPath}" alt="Gallery Image">
-                            </figure>
-                        </div>
-                    </div>
-                    <footer class="card-footer">
-                        <a href="#" class="card-footer-item">❮ Prev</a>
-                        <a href="#" class="card-footer-item">Next ❯</a>
-                    </footer>
-                </div>
+        <!-- Slideshow -->
+        <div class="slideshow-container">
+            <div class="mySlides" th:each="url, iterStat : ${detailData.photos}">
+                <img th:src="${url.photoPath}" style="width:100%" alt="Gallery Image">
             </div>
+
+            <!-- Navigation -->
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
         </div>
+        <br>
+
+        <!-- Dots -->
+        <span class="dot"
+              th:each="photo, iterStat : ${detailData.photos}"
+              th:onclick="'currentSlide(' + (${iterStat.index + 1}) + ')'">
+        </span>
+
 
         <!-- Map -->
         <div class="content has-text-centered">
@@ -53,30 +53,62 @@
 
         <!-- Leaflet.js Script -->
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                // Importing latitude and longitude
-                const latitude = /*[[${detailData.latitude}]]*/ 52.5200; // Replace with dynamic Thymeleaf value
-                const longitude = /*[[${detailData.longitude}]]*/ 13.4050; // Replace with dynamic Thymeleaf value
+            document.addEventListener("DOMContentLoaded", function () {
+                const latitude = "[[${detailData.latitude ?: 0}]]";
+                const longitude = "[[${detailData.longitude ?: 0}]]";
 
-                // Initialize the map
                 const map = L.map('map').setView([latitude, longitude], 13);
 
-                // Add OpenStreetMap tiles
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 19,
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
 
-                // Add a marker at the specified coordinates
                 L.marker([latitude, longitude]).addTo(map)
                     .bindPopup('Location: ' + latitude + ', ' + longitude)
                     .openPopup();
             });
         </script>
 
+        <!-- Slideshow Script -->
+        <script>
+            let slideIndex = 1;
+            showSlides(slideIndex);
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+                let slides = document.getElementsByClassName("mySlides");
+                let dots = document.getElementsByClassName("dot");
+
+                if (n > slides.length) {
+                    slideIndex = 1
+                }
+                if (n < 1) {
+                    slideIndex = slides.length
+                }
+
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+
+                for (let i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+            }
+        </script>
+
         <!-- Description -->
         <div class="content">
-            <!-- Importing Description -->
             <p th:text="${detailData.description}">Description here</p>
         </div>
 
@@ -94,9 +126,8 @@
     </div>
 </section>
 
-<!-- Include Leaflet.js -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
 
 </body>
 </html>
