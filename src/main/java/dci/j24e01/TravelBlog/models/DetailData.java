@@ -1,7 +1,6 @@
 package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,14 +22,19 @@ public class DetailData {
     private double latitude;
     private double longitude;
 
-    @ElementCollection
-    private List<String> imageUrls;
+    @OneToMany(mappedBy = "detailData", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Photo> photos;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
+    public DetailData() {
+        // Default constructor
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -95,12 +99,12 @@ public class DetailData {
         this.longitude = longitude;
     }
 
-    public List<String> getImageUrls() {
-        return imageUrls;
+    public List<Photo> getPhotos() {
+        return photos;
     }
 
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -119,15 +123,54 @@ public class DetailData {
         this.updatedAt = updatedAt;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DetailData that = (DetailData) o;
-        return Double.compare(latitude, that.latitude) == 0 && Double.compare(longitude, that.longitude) == 0 && Objects.equals(id, that.id) && Objects.equals(cityName, that.cityName) && Objects.equals(countryName, that.countryName) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(description, that.description) && Objects.equals(imageUrls, that.imageUrls) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+        return Double.compare(that.latitude, latitude) == 0 &&
+                Double.compare(that.longitude, longitude) == 0 &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(cityName, that.cityName) &&
+                Objects.equals(countryName, that.countryName) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(photos, that.photos) &&
+                Objects.equals(createdAt, that.createdAt) &&
+                Objects.equals(updatedAt, that.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cityName, countryName, startDate, endDate, description, latitude, longitude, imageUrls, createdAt, updatedAt);
+        return Objects.hash(id, cityName, countryName, startDate, endDate, description, latitude, longitude, photos, createdAt, updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "DetailData{" +
+                "id=" + id +
+                ", cityName='" + cityName + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", description='" + description + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", photos=" + photos +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

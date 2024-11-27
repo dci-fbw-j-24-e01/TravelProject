@@ -2,31 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="/css/bulma.min.css">
     <link rel="stylesheet" href="/css/main.css">
 
     <title>Travel Blog</title>
-
 </head>
 <body>
-<header th:replace="~{fragments/header.html :: header}"> </header>
-
+<header th:replace="~{fragments/header.html :: header}"></header>
 
 <section class="section">
     <div class="container">
         <!-- Location Header -->
         <div class="content has-text-centered">
             <!-- Importing names of City and Country for Header -->
-            <h1 class="title"th:text="${location.cityName} + ', ' + ${location.countryName}">City, Country</h1>
+            <h1 class="title" th:text="${detailData.cityName} + ', ' + ${detailData.countryName}">City, Country</h1>
             <p class="subtitle">
                 <span class="icon"><i class="fas fa-calendar-alt"></i></span>
-
                 <!-- Importing dates for Header -->
-                from <strong th:text="${location.startDate}">Start Date</strong> to <strong th:text="${location.endDate}">End Date</strong>
+                from <strong th:text="${detailData.startDate}">Start Date</strong> to <strong th:text="${detailData.endDate}">End Date</strong>
             </p>
         </div>
 
@@ -35,16 +31,16 @@
             <div class="column is-half">
                 <div class="card">
                     <div class="card-image">
-                        <figure class="image is-16by9">
-
+                        <div class="image-gallery">
                             <!-- Importing Image Gallery -->
-                            <figure class="image is-16by9" th:each="url : ${location.imageUrls}">
-                                <img th:src="${url}" alt="Gallery Image">
+                            <figure class="image is-16by9" th:each="url : ${detailData.photos}">
+                                <img th:src="${url.photoPath}" alt="Gallery Image">
                             </figure>
+                        </div>
                     </div>
                     <footer class="card-footer">
-                        <a class="card-footer-item">❮ Prev</a>
-                        <a class="card-footer-item">Next ❯</a>
+                        <a href="#" class="card-footer-item">❮ Prev</a>
+                        <a href="#" class="card-footer-item">Next ❯</a>
                     </footer>
                 </div>
             </div>
@@ -52,7 +48,6 @@
 
         <!-- Map -->
         <div class="content has-text-centered">
-            <!-- Map Container -->
             <div id="map" style="width: 100%; height: 450px; margin: auto;"></div>
         </div>
 
@@ -60,8 +55,8 @@
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 // Importing latitude and longitude
-                const latitude = /*[[${location.latitude}]]*/ 52.5200; // Replace with dynamic Thymeleaf value
-                const longitude = /*[[${location.longitude}]]*/ 13.4050; // Replace with dynamic Thymeleaf value
+                const latitude = /*[[${detailData.latitude}]]*/ 52.5200; // Replace with dynamic Thymeleaf value
+                const longitude = /*[[${detailData.longitude}]]*/ 13.4050; // Replace with dynamic Thymeleaf value
 
                 // Initialize the map
                 const map = L.map('map').setView([latitude, longitude], 13);
@@ -79,12 +74,10 @@
             });
         </script>
 
-
         <!-- Description -->
         <div class="content">
-
             <!-- Importing Description -->
-            <p th:text="${location.description}">Description here</p>
+            <p th:text="${detailData.description}">Description here</p>
         </div>
 
         <!-- Weather Section -->
@@ -98,5 +91,10 @@
         </div>
     </div>
 </section>
+
+<!-- Include Leaflet.js -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
 </body>
 </html>

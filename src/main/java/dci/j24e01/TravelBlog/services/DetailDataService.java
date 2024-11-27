@@ -9,16 +9,14 @@ import java.util.Optional;
 
 @Service
 public class DetailDataService {
-
-    private final DetailDataRepository detailDataRepository;
+    private final DetailDataRepository repository;
 
     @Autowired
-    public DetailDataService(DetailDataRepository detailDataRepository) {
-        this.detailDataRepository = detailDataRepository;
+    public DetailDataService(DetailDataRepository repository) {
+        this.repository = repository;
     }
 
     public Optional<DetailData> findById(Long id) {
-        return detailDataRepository.findById(id);
+        return repository.findById(id);
     }
-
 }
