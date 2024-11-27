@@ -82,12 +82,14 @@
 
         <!-- Weather Section -->
         <div class="box has-text-centered">
-            <h2 class="title is-4">Current Weather</h2>
+            <h2 class="title is-4">Current Weather in <span th:text="${detailData.cityName}">City</span></h2>
             <p class="subtitle is-6">
-                <span class="icon"><i class="fas fa-cloud"></i></span> 40°C
+                <span class="icon"><i class="fas fa-cloud"></i></span>
+                <span th:text="${weatherData['main']['temp']} + '°C'">Temperature</span>
             </p>
-            <p class="subtitle is-6">5 Day Forecast</p>
-            <p>Day 1: Sunny<br>Day 2: Cloudy<br>Day 3: Rainy</p>
+            <p>
+                <span th:text="'Weather: ' + ${weatherData['weather'][0]['description']}">Weather Description</span>
+            </p>
         </div>
     </div>
 </section>
