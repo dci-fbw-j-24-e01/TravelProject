@@ -12,7 +12,13 @@ public class AppController {
     }
 
     @GetMapping("/admin")
-    public String login() {
+    public String admin() {
         return "login";
+    }
+
+    @GetMapping("/admin_panel")
+    public String adminPanel() {
+
+        return "admin_panel";
     }
 }
