@@ -20,8 +20,7 @@ import java.util.List;
 
 @Service
 public class VacationService {
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+
 
     @Autowired
     private VacationPointRepository vacationPointRepository;
