@@ -11,6 +11,7 @@ import dci.j24e01.TravelBlog.repository.VacationPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,8 @@ import java.util.List;
 
 @Service
 public class VacationService {
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @Autowired
     private VacationPointRepository vacationPointRepository;
@@ -47,7 +50,7 @@ public class VacationService {
             List<Photo> photoList = new ArrayList<>();
             for (MultipartFile photo : photos) {
                 try {
-                    String filePath = "uploads/" + photo.getOriginalFilename();
+                    String filePath = "src/main/resources/static/images/" + photo.getOriginalFilename();
                     photo.transferTo(new File(filePath));
 
                     Photo photoEntity = new Photo();
