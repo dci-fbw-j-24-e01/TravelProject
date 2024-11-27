@@ -27,12 +27,12 @@
         <td th:text="${point.route}"></td>
         <td th:text="${point.approved ? 'Yes' : 'No'}"></td>
         <td>
-            <form method="POST" action="/admin_panel/delete">
+            <form method="POST" action="/delete">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                 <input type="hidden" name="id" th:value="${point.id}">
                 <button type="submit">Delete</button>
             </form>
-            <form th:if="${!point.approved}" method="POST" action="/admin_panel/approve">
+            <form th:if="${!point.approved}" method="POST" action="/approve">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                 <input type="hidden" name="id" th:value="${point.id}">
                 <button type="submit">Approve</button>
