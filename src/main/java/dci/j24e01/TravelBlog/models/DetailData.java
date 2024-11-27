@@ -31,10 +31,10 @@ public class DetailData {
     private LocalDateTime updatedAt;
 
     public DetailData() {
-        // Default constructor
+
     }
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }

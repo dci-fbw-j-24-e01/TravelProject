@@ -15,12 +15,12 @@ public class Photo {
 
 
     @ManyToOne
-    @JoinColumn(name = "vacation_point_id", nullable = true) // Allow null if it's not linked to a VacationPoint
+    @JoinColumn(name = "vacation_point_id", nullable = true)
     private VacationPoint vacationPoint;
 
 
     @ManyToOne
-    @JoinColumn(name = "detail_data_id", nullable = true) // Allow null if it's not linked to DetailData
+    @JoinColumn(name = "detail_data_id", nullable = true)
     private DetailData detailData;
 
 

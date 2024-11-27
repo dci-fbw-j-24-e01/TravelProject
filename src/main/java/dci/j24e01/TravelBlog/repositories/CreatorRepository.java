@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CreatorRepository extends JpaRepository<Creator, Integer> {
 
-    // If needed, you can add custom queries here ;D
+
 }
