@@ -37,6 +37,11 @@ public class AppController {
         model.addAttribute("vacationPoints", adminService.getAllVacationPoints());
         return "admin_panel";
     }
+    @GetMapping("/admin_panel")
+    public String adminPage(Model model) {
+        model.addAttribute("vacationPoints", adminService.getAllVacationPoints());
+        return "admin_panel";
+    }
 
 
     @PostMapping("/delete")
