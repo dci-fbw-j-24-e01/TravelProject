@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
-public class DetailController {
+public class DetailDataController {
 
     private final DetailDataService detailDataService;
 
     @Autowired
-    public DetailController(DetailDataService detailDataService) {
+    public DetailDataController(DetailDataService detailDataService) {
         this.detailDataService = detailDataService;
     }
 
