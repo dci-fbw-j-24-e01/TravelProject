@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog;
+package dci.j24e01.TravelBlog.security;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +23,8 @@ public class SecurityConfig {
         String key = dotenv.get("rememberMeKey");
 
         httpSecurity.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/css/**", "/icons/**", "/fonts/**", "/images/**").permitAll();
+            auth.requestMatchers("/", "/css/**", "/icons/**", "/fonts/**", "/images/**", "/submit", "/js/**").permitAll();
+            auth.requestMatchers("/admin_panel/**").hasRole("ADMIN");
             auth.requestMatchers("/admin").permitAll();
             auth.requestMatchers("admin_panel").authenticated();
             auth.anyRequest().permitAll();
