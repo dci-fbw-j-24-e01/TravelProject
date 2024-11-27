@@ -4,6 +4,7 @@ import dci.j24e01.TravelBlog.repository.VacationPointRepository;
 import dci.j24e01.TravelBlog.service.AdminService;
 import dci.j24e01.TravelBlog.service.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +23,11 @@ public class AppController {
     private VacationPointRepository vacationPointRepository;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, Authentication authentication) {
         model.addAttribute("vacationPoints", vacationService.getAllVacationPoints());
         model.addAttribute("approvedVacationPoints", vacationPointRepository.findAllByApprovedTrue());
+        boolean isLoggedIn = authentication != null && authentication.isAuthenticated();
+        model.addAttribute("loggedIn", isLoggedIn);
         return "index";
     }
 
@@ -32,13 +35,6 @@ public class AppController {
     public String admin() {
         return "admin";
     }
-    @GetMapping("/admin_panel")
-    public String adminPage(Model model) {
-        model.addAttribute("vacationPoints", adminService.getAllVacationPoints());
-        return "admin_panel";
-    }
-
-
 
     @PostMapping("/delete")
     public String deleteVacationPoint(@RequestParam Long id) {
@@ -51,6 +47,7 @@ public class AppController {
         vacationService.updateApprovalStatus(id, true);
         return "redirect:/admin_panel";
     }
+
     @PostMapping("/submit")
     public String submitVacationPoint(
             @RequestParam String title,
@@ -64,5 +61,11 @@ public class AppController {
         return "redirect:/";
     }
 
-
+    @GetMapping("/admin_panel")
+    public String adminPanel(Model model, Authentication authentication) {
+        boolean isLoggedIn = authentication != null && authentication.isAuthenticated();
+        model.addAttribute("vacationPoints", adminService.getAllVacationPoints());
+        model.addAttribute("loggedIn", isLoggedIn);
+        return "admin_panel";
+    }
 }

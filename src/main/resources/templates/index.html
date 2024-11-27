@@ -14,7 +14,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-    <header th:insert="~{fragments/header.html :: header}"> </header>
+    <header th:replace="~{fragments/header.html :: header}"> </header>   
+   
 
     <section class="hero is-medium is-link">
         <div class="hero-body">
@@ -65,6 +66,9 @@
         <textarea name="route" placeholder="Optional Route (GeoJSON)"></textarea>
         <button type="submit">Submit</button>
     </form>
+
+    <footer th:insert="~{fragments/footer.html :: footer}"></footer>
+
     <script>
         const map = L.map('map').setView([0, 0], 2);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
