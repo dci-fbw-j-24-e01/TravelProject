@@ -69,4 +69,5 @@ public class SecurityConfig {
     public InMemoryTokenRepositoryImpl tokenRepository() {
         return new InMemoryTokenRepositoryImpl();
     }
+
 }
