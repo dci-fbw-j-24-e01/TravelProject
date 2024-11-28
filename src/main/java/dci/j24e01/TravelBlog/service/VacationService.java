@@ -72,13 +72,13 @@ public class VacationService {
                     Resource staticResource = new ClassPathResource("static");
                     Path targetUploadsPath = Path.of(staticResource.getURI()).resolve("photos");
                     Path targetDestination = targetUploadsPath.resolve(filename);
-                    String filePath = "src/main/resources/static/images/" + photo.getOriginalFilename();
+
                     photo.transferTo(destination);
                     photo.transferTo(targetDestination);
 
 
                     Photo photoEntity = new Photo();
-                    photoEntity.setPhotoPath(String.valueOf(targetDestination));
+                    photoEntity.setPhotoPath(filename);
                     photoEntity.setVacationPoint(savedPoint);
                     photoList.add(photoEntity);
                 } catch (IOException e) {
