@@ -120,6 +120,9 @@
                 <span th:text="${weatherData['main']['tempFormatted']} + '°C'">Temperature</span>
             </p>
             <p>
+                <!-- Display the weather icon -->
+                <img th:src="${weatherData['weather'][0]['iconUrl']}" alt="Weather Icon" style="vertical-align: middle;">
+                <!-- Display the weather description -->
                 <span th:text="'Weather: ' + ${weatherData['weather'][0]['description']}">Weather Description</span>
             </p>
         </div>

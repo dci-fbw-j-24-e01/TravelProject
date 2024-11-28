@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -12,6 +13,7 @@ public class WeatherService {
 
     private final String apiKey;
     private final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
+    private final String ICON_URL_BASE = "https://openweathermap.org/img/wn/";
 
     public WeatherService() {
         // Load the API key from the .env file
@@ -30,6 +32,22 @@ public class WeatherService {
                 .queryParam("units", "metric")
                 .toUriString();
 
-        return restTemplate.getForObject(url, Map.class);
+        Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+
+        if (response != null && response.containsKey("weather")) {
+            List<Map<String, Object>> weatherList = (List<Map<String, Object>>) response.get("weather");
+            if (weatherList != null && !weatherList.isEmpty()) {
+                Map<String, Object> weatherDetails = weatherList.get(0);
+                if (weatherDetails.containsKey("icon")) {
+                    String iconCode = (String) weatherDetails.get("icon");
+                    weatherDetails.put("iconUrl", ICON_URL_BASE + iconCode + "@2x.png");
+                }
+            }
+        }
+
+        return response;
+
+
+//        return restTemplate.getForObject(url, Map.class);
     }
 }
