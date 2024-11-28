@@ -117,7 +117,7 @@
             <h2 class="title is-4">Current Weather in <span th:text="${detailData.cityName}">City</span></h2>
             <p class="subtitle is-6">
                 <span class="icon"><i class="fas fa-cloud"></i></span>
-                <span th:text="${weatherData['main']['temp']} + '°C'">Temperature</span>
+                <span th:text="${weatherData['main']['tempFormatted']} + '°C'">Temperature</span>
             </p>
             <p>
                 <span th:text="'Weather: ' + ${weatherData['weather'][0]['description']}">Weather Description</span>
