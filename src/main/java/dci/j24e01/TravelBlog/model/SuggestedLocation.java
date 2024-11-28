@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog.model;V
+package dci.j24e01.TravelBlog.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,9 +19,7 @@ public class SuggestedLocation {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "submitted_by", nullable = true)
-    private User submittedBy;
+
 
     private Boolean approved;
 
@@ -60,13 +58,7 @@ public class SuggestedLocation {
         this.description = description;
     }
 
-    public User getSubmittedBy() {
-        return submittedBy;
-    }
 
-    public void setSubmittedBy(User submittedBy) {
-        this.submittedBy = submittedBy;
-    }
 
     public Boolean getApproved() {
         return approved;
@@ -88,11 +80,11 @@ public class SuggestedLocation {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         SuggestedLocation that = (SuggestedLocation) o;
-        return Objects.equals(id, that.id) && Objects.equals(city, that.city) && Objects.equals(country, that.country) && Objects.equals(description, that.description) && Objects.equals(submittedBy, that.submittedBy) && Objects.equals(approved, that.approved) && Objects.equals(createdAt, that.createdAt);
+        return Objects.equals(id, that.id) && Objects.equals(city, that.city) && Objects.equals(country, that.country) && Objects.equals(description, that.description) && Objects.equals(approved, that.approved) && Objects.equals(createdAt, that.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, city, country, description, submittedBy, approved, createdAt);
+        return Objects.hash(id, city, country, description, approved, createdAt);
     }
 }
