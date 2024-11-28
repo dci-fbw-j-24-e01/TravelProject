@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog.model;
+package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
 
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "vacation_points")
 public class VacationPoint {
 
     @Id
@@ -141,4 +142,3 @@ public class VacationPoint {
                 '}';
     }
 }
-

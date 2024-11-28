@@ -1,6 +1,6 @@
 package dci.j24e01.TravelBlog.controllers;
 
-import dci.j24e01.TravelBlog.repository.VacationPointRepository;
+import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
 import dci.j24e01.TravelBlog.service.AdminService;
 import dci.j24e01.TravelBlog.service.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +56,12 @@ public class AppController {
             @RequestParam double longitude,
             @RequestParam(required = false) MultipartFile[] photos,
             @RequestParam(required = false) String route
+
     ) {
+
         vacationService.saveVacationPoint(title, description, latitude, longitude, photos, route);
+
+
         return "redirect:/";
     }
 

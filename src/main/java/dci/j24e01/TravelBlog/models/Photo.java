@@ -1,10 +1,11 @@
-package dci.j24e01.TravelBlog.model;
+package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "photos")
 public class Photo {
 
     @Id

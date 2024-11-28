@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog.model;
+package dci.j24e01.TravelBlog.models;
 
 
 import jakarta.persistence.*;
@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "routs")
 public class Route {
 
     @Id
