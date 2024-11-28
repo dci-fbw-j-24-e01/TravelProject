@@ -25,19 +25,13 @@ public class DetailDataController {
         this.weatherService = new WeatherService();
     }
 
-//    @GetMapping("/detail")
-//    public String getDetailMockup(Model model) {
-//        return "detail";
-//    }
+
 
     @GetMapping("/detail/{id}")
     public String getDetailById(@PathVariable Long id, Model model) {
         DetailData detailData = detailDataService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Detail not found"));
 
-        // Debugging output
-        System.out.println("Latitude: " + detailData.getLatitude());
-        System.out.println("Longitude: " + detailData.getLongitude());
 
         Map<String, Object> weatherData = weatherService.getWeather(detailData.getCityName());
         if (weatherData != null && weatherData.containsKey("main")) {
