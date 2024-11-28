@@ -1,8 +1,8 @@
 package dci.j24e01.TravelBlog.controllers;
 
-import dci.j24e01.TravelBlog.repository.VacationPointRepository;
-import dci.j24e01.TravelBlog.service.AdminService;
-import dci.j24e01.TravelBlog.service.VacationService;
+import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
+import dci.j24e01.TravelBlog.services.AdminService;
+import dci.j24e01.TravelBlog.services.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

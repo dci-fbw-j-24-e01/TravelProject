@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog.repository;
+package dci.j24e01.TravelBlog.repositories;
 
 
 import dci.j24e01.TravelBlog.models.Photo;

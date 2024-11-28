@@ -1,13 +1,13 @@
-package dci.j24e01.TravelBlog.service;
+package dci.j24e01.TravelBlog.services;
 
 
 
-import dci.j24e01.TravelBlog.model.Route;
+import dci.j24e01.TravelBlog.models.Route;
 import dci.j24e01.TravelBlog.models.Photo;
 import dci.j24e01.TravelBlog.models.VacationPoint;
-import dci.j24e01.TravelBlog.repository.PhotoRepository;
-import dci.j24e01.TravelBlog.repository.RouteRepository;
-import dci.j24e01.TravelBlog.repository.VacationPointRepository;
+import dci.j24e01.TravelBlog.repositories.PhotoRepository;
+import dci.j24e01.TravelBlog.repositories.RouteRepository;
+import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

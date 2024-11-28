@@ -1,7 +1,6 @@
-package dci.j24e01.TravelBlog.model;
+package dci.j24e01.TravelBlog.models;
 
 
-import dci.j24e01.TravelBlog.models.VacationPoint;
 import jakarta.persistence.*;
 
 import java.util.Objects;
