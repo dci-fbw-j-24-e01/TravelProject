@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog.model;
+package dci.j24e01.TravelBlog.model;V
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Table(name = "suggested_locations")
 public class SuggestedLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "routs")
 public class Route {
 
     @Id

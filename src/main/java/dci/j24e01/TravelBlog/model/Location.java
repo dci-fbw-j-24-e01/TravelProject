@@ -1,9 +1,6 @@
 package dci.j24e01.TravelBlog.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Table(name = "locations")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

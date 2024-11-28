@@ -3,7 +3,6 @@ package dci.j24e01.TravelBlog.controllers;
 import dci.j24e01.TravelBlog.repository.VacationPointRepository;
 import dci.j24e01.TravelBlog.service.AdminService;
 import dci.j24e01.TravelBlog.service.VacationService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -60,7 +59,7 @@ public class AppController {
             @RequestParam(required = false) MultipartFile[] photos,
             @RequestParam(required = false) String route
 
-    ) throws IOException {
+    ) {
 
         vacationService.saveVacationPoint(title, description, latitude, longitude, photos, route);
 

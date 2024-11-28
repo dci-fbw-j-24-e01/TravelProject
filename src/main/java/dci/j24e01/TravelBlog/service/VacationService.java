@@ -39,7 +39,7 @@ public class VacationService {
         return vacationPointRepository.findAll();
     }
 
-    public void saveVacationPoint(String title, String description, double latitude, double longitude, MultipartFile[] photos, String routeGeoJson) throws IOException {
+    public void saveVacationPoint(String title, String description, double latitude, double longitude, MultipartFile[] photos, String routeGeoJson)  {
         VacationPoint vacationPoint = new VacationPoint();
 
 
