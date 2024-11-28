@@ -55,7 +55,6 @@ public class VacationService {
             List<Photo> photoList = new ArrayList<>();
             for (MultipartFile photo : photos) {
                 try {
-;
                     String extension = "";
                     int dotIndex = photo.getOriginalFilename().lastIndexOf(".");
                     if (dotIndex >= 0) {
