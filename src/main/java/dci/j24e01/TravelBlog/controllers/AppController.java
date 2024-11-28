@@ -57,7 +57,7 @@ public class AppController {
             @RequestParam String description,
             @RequestParam double latitude,
             @RequestParam double longitude,
-            @RequestParam(required = false) MultipartFile photos,
+            @RequestParam(required = false) MultipartFile[] photos,
             @RequestParam(required = false) String route
 
     ) throws IOException {
