@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog.model;
+package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
