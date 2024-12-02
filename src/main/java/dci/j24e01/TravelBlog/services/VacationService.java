@@ -105,4 +105,8 @@ public class VacationService {
         vacationPointRepository.save(vacationPoint);
     }
 
+    public List<VacationPoint> getApprovedVacationPoints() {
+        return vacationPointRepository.findAllByApprovedTrue();
+    }
+
 }

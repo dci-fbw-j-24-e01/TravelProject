@@ -1,5 +1,6 @@
 package dci.j24e01.TravelBlog.controllers;
 
+import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
 import dci.j24e01.TravelBlog.services.AdminService;
 import dci.j24e01.TravelBlog.services.VacationService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 public class AppController {
@@ -25,7 +28,10 @@ public class AppController {
     @GetMapping("/")
     public String index(Model model, Authentication authentication) {
         model.addAttribute("vacationPoints", vacationService.getAllVacationPoints());
-        model.addAttribute("approvedVacationPoints", vacationPointRepository.findAllByApprovedTrue());
+
+        List<VacationPoint> approvedVacationPoints = vacationPointRepository.findAllByApprovedTrue();
+        model.addAttribute("approvedVacationPoints", approvedVacationPoints);
+
         boolean isLoggedIn = authentication != null && authentication.isAuthenticated();
         model.addAttribute("loggedIn", isLoggedIn);
         return "index";

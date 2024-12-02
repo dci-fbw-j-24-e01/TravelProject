@@ -1,5 +1,6 @@
 package dci.j24e01.TravelBlog.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -16,6 +17,7 @@ public class Photo {
 
 
     @ManyToOne
+    @JsonIgnore // added because circular references btw Photo and VacationPoint
     @JoinColumn(name = "vacation_point_id", nullable = true)
     private VacationPoint vacationPoint;
 

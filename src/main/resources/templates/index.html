@@ -69,7 +69,7 @@
 
     <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
-    <script>
+    <script th:inline="javascript">
         const map = L.map('map').setView([0, 0], 2);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
@@ -80,6 +80,23 @@
             document.getElementById('latitude').value = e.latlng.lat;
             document.getElementById('longitude').value = e.latlng.lng;
         });
+
+        // New functionality: Add existing vacation points to the map
+        const vacationPoints = /*[[${approvedVacationPoints}]]*/ []; // Points from backend
+        console.log("Vacation Points:", vacationPoints);
+
+        vacationPoints.forEach(point => {
+            const { latitude, longitude, title } = point;
+            if (latitude && longitude) {
+                L.marker([latitude, longitude])
+                    .addTo(map)
+                    .bindPopup(`<b>${title}</b>`);
+            }
+        });
+
     </script>
+
+
+
 </body>
 </html>
