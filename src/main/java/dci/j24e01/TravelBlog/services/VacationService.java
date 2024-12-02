@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog.service;
+package dci.j24e01.TravelBlog.services;
 
 
 import dci.j24e01.TravelBlog.models.Photo;
@@ -55,6 +55,8 @@ public class VacationService {
             List<Photo> photoList = new ArrayList<>();
             for (MultipartFile photo : photos) {
                 try {
+                    System.out.println(photo.getName());
+                    System.out.println(photo.getSize());
                     String extension = "";
                     int dotIndex = photo.getOriginalFilename().lastIndexOf(".");
                     if (dotIndex >= 0) {
