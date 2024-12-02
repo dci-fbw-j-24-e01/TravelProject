@@ -1,4 +1,4 @@
-package dci.j24e01.TravelBlog.models;
+package dci.j24e01.TravelBlog.model;
 
 import jakarta.persistence.*;
 

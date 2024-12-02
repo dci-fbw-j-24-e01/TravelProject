@@ -1,6 +1,6 @@
 package dci.j24e01.TravelBlog.controllers;
 
-import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
+import dci.j24e01.TravelBlog.repository.VacationPointRepository;
 import dci.j24e01.TravelBlog.service.AdminService;
 import dci.j24e01.TravelBlog.service.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +65,12 @@ public class AppController {
         return "redirect:/";
     }
 
-    @GetMapping("/admin_panel")
-    public String adminPanel(Model model, Authentication authentication) {
-        boolean isLoggedIn = authentication != null && authentication.isAuthenticated();
-        model.addAttribute("vacationPoints", adminService.getAllVacationPoints());
-        model.addAttribute("loggedIn", isLoggedIn);
-        return "admin_panel";
-    }
+    //  COMMENTED BECAUSE IT WAS CAUSING ISSUES WITH THE ADMINCONTROLLER.JAVA":
+//    @GetMapping("/admin_panel")
+//    public String adminPanel(Model model, Authentication authentication) {
+//        boolean isLoggedIn = authentication != null && authentication.isAuthenticated();
+//        model.addAttribute("vacationPoints", adminService.getAllVacationPoints());
+//        model.addAttribute("loggedIn", isLoggedIn);
+//        return "admin_panel";
+//    }
 }

@@ -1,7 +1,7 @@
 package dci.j24e01.TravelBlog.controllers;
 
-import dci.j24e01.TravelBlog.models.Creator;
-import dci.j24e01.TravelBlog.repositories.CreatorRepository;
+import dci.j24e01.TravelBlog.model.Creator;
+import dci.j24e01.TravelBlog.repository.CreatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
