@@ -63,9 +63,6 @@ public class AdminService {
                     photoEntity.setVacationPoint(savedPoint);
                     photoList.add(photoEntity);
 
-                    String uploadsDir = "src/main/resources/static/photos/";
-                    Path uploadsPath = Path.of(uploadsDir);
-                    System.out.println("Photos directory: " + uploadsPath.toAbsolutePath());
                 } catch (Exception e) {
                     throw new RuntimeException("Error saving photo", e);
                 }
