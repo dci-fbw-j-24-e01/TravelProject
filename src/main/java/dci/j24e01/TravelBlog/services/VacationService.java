@@ -109,4 +109,8 @@ public class VacationService {
         return vacationPointRepository.findAllByApprovedTrue();
     }
 
+    public VacationPoint getVacationPointById(Long id) {
+        return vacationPointRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Vacation Point with ID " + id + " not found"));
+    }
 }
