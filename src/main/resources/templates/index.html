@@ -33,7 +33,7 @@
                 <div class="card-image" th:each="point : ${point.photos}">
                     <figure class="image is-4by3" >
                         <img
-                                th:src="@{/photos/${point.photos}}"
+                                th:src="@{'/photos/'+${point}}"
                                 alt="Placeholder image"
                         />
                     </figure>
@@ -42,7 +42,7 @@
                     <div class="media">
                         <div class="media-content">
                             <p class="title is-4" th:text="${point.city}"></p>
-                            <p class="subtitle is-6">Germany</p>
+                            <p class="subtitle is-6" th:text="${point.country}"></p>
                         </div>
                     </div>
 
