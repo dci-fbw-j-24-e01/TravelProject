@@ -1,6 +1,6 @@
-package dci.j24e01.TravelBlog.controllers;
+package dci.j24e01.TravelBlog.controller;
 
-import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
+import dci.j24e01.TravelBlog.repository.VacationPointRepository;
 import dci.j24e01.TravelBlog.service.AdminService;
 import dci.j24e01.TravelBlog.service.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
