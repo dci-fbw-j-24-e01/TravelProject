@@ -27,12 +27,24 @@ public class VacationPoint {
     @OneToMany(mappedBy = "vacationPoint", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos;
 
+    @OneToOne(mappedBy = "vacationPoint", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private DetailData detailData;
+
     private boolean approved;
 
     public VacationPoint() {
     }
 
-    public VacationPoint(Long id, String title, String description, double latitude, double longitude, String route, LocalDateTime createdAt, List<Photo> photos, boolean approved) {
+    public VacationPoint(Long id,
+                         String title,
+                         String description,
+                         double latitude,
+                         double longitude,
+                         String route,
+                         LocalDateTime createdAt,
+                         List<Photo> photos,
+                         DetailData detailData,
+                         boolean approved) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -41,6 +53,7 @@ public class VacationPoint {
         this.route = route;
         this.createdAt = createdAt;
         this.photos = photos;
+        this.detailData = detailData;
         this.approved = approved;
     }
 
@@ -116,24 +129,24 @@ public class VacationPoint {
         this.approved = approved;
     }
 
+    public DetailData getDetailData() {
+        return detailData;
+    }
+
+    public void setDetailData(DetailData detailData) {
+        this.detailData = detailData;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof VacationPoint)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         VacationPoint that = (VacationPoint) o;
-        return Double.compare(that.latitude, latitude) == 0 &&
-                Double.compare(that.longitude, longitude) == 0 &&
-                approved == that.approved &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(route, that.route) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(photos, that.photos);
+        return Double.compare(latitude, that.latitude) == 0 && Double.compare(longitude, that.longitude) == 0 && approved == that.approved && Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(route, that.route) && Objects.equals(createdAt, that.createdAt) && Objects.equals(photos, that.photos) && Objects.equals(detailData, that.detailData);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, latitude, longitude, route, createdAt, photos, approved);
+        return Objects.hash(id, title, description, latitude, longitude, route, createdAt, photos, detailData, approved);
     }
 
     @Override
@@ -147,6 +160,7 @@ public class VacationPoint {
                 ", route='" + route + '\'' +
                 ", createdAt=" + createdAt +
                 ", photos=" + photos +
+                ", detailData=" + detailData +
                 ", approved=" + approved +
                 '}';
     }

@@ -25,6 +25,11 @@ public class DetailData {
     @OneToMany(mappedBy = "detailData", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vacation_point_id", referencedColumnName = "id")
+    private VacationPoint vacationPoint;
+
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
@@ -34,6 +39,20 @@ public class DetailData {
 
     }
 
+    public DetailData(Long id, String cityName, String countryName, LocalDate startDate, LocalDate endDate, String description, double latitude, double longitude, List<Photo> photos, VacationPoint vacationPoint, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.cityName = cityName;
+        this.countryName = countryName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.photos = photos;
+        this.vacationPoint = vacationPoint;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     public Long getId() {
         return id;
@@ -123,6 +142,14 @@ public class DetailData {
         this.updatedAt = updatedAt;
     }
 
+    public VacationPoint getVacationPoint() {
+        return vacationPoint;
+    }
+
+    public void setVacationPoint(VacationPoint vacationPoint) {
+        this.vacationPoint = vacationPoint;
+    }
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -136,25 +163,14 @@ public class DetailData {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DetailData that = (DetailData) o;
-        return Double.compare(that.latitude, latitude) == 0 &&
-                Double.compare(that.longitude, longitude) == 0 &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(cityName, that.cityName) &&
-                Objects.equals(countryName, that.countryName) &&
-                Objects.equals(startDate, that.startDate) &&
-                Objects.equals(endDate, that.endDate) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(photos, that.photos) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt);
+        return Double.compare(latitude, that.latitude) == 0 && Double.compare(longitude, that.longitude) == 0 && Objects.equals(id, that.id) && Objects.equals(cityName, that.cityName) && Objects.equals(countryName, that.countryName) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(description, that.description) && Objects.equals(photos, that.photos) && Objects.equals(vacationPoint, that.vacationPoint) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cityName, countryName, startDate, endDate, description, latitude, longitude, photos, createdAt, updatedAt);
+        return Objects.hash(id, cityName, countryName, startDate, endDate, description, latitude, longitude, photos, vacationPoint, createdAt, updatedAt);
     }
 
     @Override
@@ -169,6 +185,7 @@ public class DetailData {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", photos=" + photos +
+                ", vacationPoint=" + vacationPoint +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
