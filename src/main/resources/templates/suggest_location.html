@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggest New Location</title>
+    <link rel="stylesheet" href="/css/bulma.min.css">
+</head>
+<body>
+<header th:replace="~{fragments/header.html :: header}"></header>
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Suggest a New Location</h1>
+
+
+        <div class="notification is-success" th:if="${param.success}">
+            Location has been submitted successfully!
+        </div>
+        <div class="notification is-danger" th:if="${param.error}">
+            There was an error. Try again or contact the administrator.
+        </div>
+
+        <form method="POST" th:action="@{/suggest-location}" th:object="${location}">
+            <div class="field">
+                <label class="label">City</label>
+                <div class="control">
+                    <input class="input" type="text" th:field="*{city}" placeholder="Enter city name" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Country</label>
+                <div class="control">
+                    <input class="input" type="text" th:field="*{country}" placeholder="Enter country name" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Latitude</label>
+                <div class="control">
+                    <input class="input" type="number" step="any" th:field="*{latitude}" placeholder="Enter latitude">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Longitude</label>
+                <div class="control">
+                    <input class="input" type="number" step="any" th:field="*{longitude}" placeholder="Enter longitude">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Thumbnail URL</label>
+                <div class="control">
+                    <input class="input" type="url" th:field="*{thumbnailUrl}" placeholder="Enter thumbnail URL">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</body>
+</html>
