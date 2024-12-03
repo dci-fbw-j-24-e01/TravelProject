@@ -1,5 +1,6 @@
 package dci.j24e01.TravelBlog.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -14,19 +15,30 @@ public class Photo {
 
     private String photoPath;
 
+
     @ManyToOne
-    @JoinColumn(name = "vacation_point_id")
+    @JsonIgnore // added because circular references btw Photo and VacationPoint
+    @JoinColumn(name = "vacation_point_id", nullable = true)
     private VacationPoint vacationPoint;
+
+
+    @ManyToOne
+    @JoinColumn(name = "detail_data_id", nullable = true)
+    private DetailData detailData;
+
 
     public Photo() {
     }
 
-    public Photo(Long id, String photoPath, VacationPoint vacationPoint) {
+
+    public Photo(Long id, String photoPath, VacationPoint vacationPoint, DetailData detailData) {
         this.id = id;
         this.photoPath = photoPath;
         this.vacationPoint = vacationPoint;
+        this.detailData = detailData;
     }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -51,15 +63,30 @@ public class Photo {
         this.vacationPoint = vacationPoint;
     }
 
+    public DetailData getDetailData() {
+        return detailData;
+    }
+
+    public void setDetailData(DetailData detailData) {
+        this.detailData = detailData;
+    }
+
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Photo photo)) return false;
-        return Objects.equals(id, photo.id) && Objects.equals(photoPath, photo.photoPath) && Objects.equals(vacationPoint, photo.vacationPoint);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Photo photo = (Photo) o;
+        return Objects.equals(id, photo.id) &&
+                Objects.equals(photoPath, photo.photoPath) &&
+                Objects.equals(vacationPoint, photo.vacationPoint) &&
+                Objects.equals(detailData, photo.detailData);
     }
+
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, photoPath, vacationPoint);
+        return Objects.hash(id, photoPath, vacationPoint, detailData);
     }
 
     @Override
@@ -67,7 +94,8 @@ public class Photo {
         return "Photo{" +
                 "id=" + id +
                 ", photoPath='" + photoPath + '\'' +
-                ", vacationPoint=" + vacationPoint +
+                ", vacationPoint=" + (vacationPoint != null ? vacationPoint.getId() : "null") +
+                ", detailData=" + (detailData != null ? detailData.getId() : "null") +
                 '}';
     }
 }

@@ -10,12 +10,11 @@
     <link rel="stylesheet" href="/css/main.css">
 
     <title>Travel Blog</title>
-    <script src="/js/header.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-<header th:replace="~{fragments/header.html :: header}"> </header>
+<header th:replace="~{fragments/header.html :: header}"></header>
 
 
 <section class="hero is-medium is-link">
@@ -29,12 +28,12 @@
     <div class="block"></div>
     <h2 class="title is-2">Latest</h2>
     <div class="columns">
-        <div class="column" th:each="point : ${approvedVacationPoints}">
+        <div class="column" th:each="point : ${vacationPoints}">
             <div class="card">
-                <div class="card-image">
-                    <figure class="image is-4by3">
+                <div class="card-image" th:each="point : ${point.photos}">
+                    <figure class="image is-4by3" >
                         <img
-                                src="/images/hamburg.jpg"
+                                th:src="@{'/photos/'+${point}}"
                                 alt="Placeholder image"
                         />
                     </figure>
@@ -42,8 +41,8 @@
                 <div class="card-content">
                     <div class="media">
                         <div class="media-content">
-                            <p class="title is-4" th:text="${point.title}"></p>
-                            <p class="subtitle is-6">Germany</p>
+                            <p class="title is-4" th:text="${point.city}"></p>
+                            <p class="subtitle is-6" th:text="${point.country}"></p>
                         </div>
                     </div>
 
@@ -57,30 +56,39 @@
 </div>
 <br>
 <div id="map" style="width: 100%; height: 500px;"></div>
-<form method="POST" action="/submit" enctype="multipart/form-data">
-    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-    <input type="text" name="title" placeholder="Title" required>
-    <textarea name="description" placeholder="Description"></textarea>
-    <input type="hidden" id="latitude" name="latitude">
-    <input type="hidden" id="longitude" name="longitude">
-    <input type="file" name="photos" multiple>
-    <textarea name="route" placeholder="Optional Route (GeoJSON)"></textarea>
-    <button type="submit">Submit</button>
-</form>
+
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
-<script>
-    const map = L.map('map').setView([0, 0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-    let marker;
-    map.on('click', function(e) {
-        if (marker) map.removeLayer(marker);
-        marker = L.marker(e.latlng).addTo(map);
-        document.getElementById('latitude').value = e.latlng.lat;
-        document.getElementById('longitude').value = e.latlng.lng;
+<script th:inline="javascript">
+    // Map init
+    const map = L.map('map').setView([0, 0], 2); // Center and Zoom
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const vacationPoints = /*[[${vacationPoints}]]*/ [];
+
+
+    vacationPoints.forEach(point => {
+        const marker = L.marker([point.latitude, point.longitude]).addTo(map);
+        marker.bindPopup(`
+            <h3>${point.city}</h3>
+            <p>${point.description}</p>
+            <p><strong>Start:</strong> ${point.startDate}</p>
+            <p><strong>End:</strong> ${point.endDate}</p>
+               <div class="photos">
+                      ${point.photos.map(photo => `<img src="/photos/${photo}" style="width:100px;height:auto;">`).join('')}
+                    </div>
+        `);
     });
+
+
+    if (vacationPoints.length > 0) {
+        const bounds = L.latLngBounds(vacationPoints.map(p => [p.latitude, p.longitude]));
+        map.fitBounds(bounds);
+    }
 </script>
 </body>
 </html>

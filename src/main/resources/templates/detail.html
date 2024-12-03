@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <title>Travel Blog</title>
+
+
+</head>
+<body>
+<header th:replace="~{fragments/header.html :: header}"></header>
+
+<section class="section">
+    <div class="container">
+        <!-- Location Header -->
+        <div class="content has-text-centered">
+            <h1 class="title" th:text="${detailData.cityName} + ', ' + ${detailData.countryName}">City, Country</h1>
+            <p class="subtitle">
+                <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+                from <strong th:text="${detailData.startDate}">Start Date</strong> to <strong
+                    th:text="${detailData.endDate}">End Date</strong>
+            </p>
+        </div>
+
+        <!-- Slideshow -->
+        <div class="slideshow-container">
+            <div class="mySlides" th:each="url, iterStat : ${detailData.photos}">
+                <img th:src="${url.photoPath}" style="width:100%" alt="Gallery Image">
+            </div>
+
+            <!-- Navigation -->
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
+        <br>
+
+        <!-- Dots -->
+        <span class="dot"
+              th:each="photo, iterStat : ${detailData.photos}"
+              th:onclick="'currentSlide(' + (${iterStat.index + 1}) + ')'">
+        </span>
+
+
+        <!-- Map -->
+        <div class="content has-text-centered">
+            <div id="map" style="width: 100%; height: 450px; margin: auto;"></div>
+        </div>
+
+        <!-- Leaflet.js Script -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const latitude = "[[${detailData.latitude ?: 0}]]";
+                const longitude = "[[${detailData.longitude ?: 0}]]";
+
+                const map = L.map('map').setView([latitude, longitude], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                L.marker([latitude, longitude]).addTo(map)
+                    .bindPopup('Location: ' + latitude + ', ' + longitude)
+                    .openPopup();
+            });
+        </script>
+
+        <!-- Slideshow Script -->
+        <script>
+            let slideIndex = 1;
+            showSlides(slideIndex);
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+                let slides = document.getElementsByClassName("mySlides");
+                let dots = document.getElementsByClassName("dot");
+
+                if (n > slides.length) {
+                    slideIndex = 1
+                }
+                if (n < 1) {
+                    slideIndex = slides.length
+                }
+
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+
+                for (let i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+            }
+        </script>
+
+        <!-- Description -->
+        <div class="content">
+            <p th:text="${detailData.description}">Description here</p>
+        </div>
+
+        <!-- Weather Section -->
+        <div class="box has-text-centered">
+            <h2 class="title is-4">Current Weather in <span th:text="${detailData.cityName}">City</span></h2>
+            <p class="subtitle is-6">
+                <span class="icon"><i class="fas fa-cloud"></i></span>
+                <span th:text="${weatherData['main']['tempFormatted']} + '°C'">Temperature</span>
+            </p>
+            <p>
+                <!-- Display the weather icon -->
+                <img th:src="${weatherData['weather'][0]['iconUrl']}" alt="Weather Icon" style="vertical-align: middle;">
+                <!-- Display the weather description -->
+                <span th:text="'Weather: ' + ${weatherData['weather'][0]['description']}">Weather Description</span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+
+</body>
+</html>

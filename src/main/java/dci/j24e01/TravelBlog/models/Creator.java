@@ -1,6 +1,7 @@
 package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
+
 import java.util.Objects;
 
 @Entity

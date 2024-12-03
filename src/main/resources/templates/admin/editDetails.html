@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Details</title>
+    <link rel="stylesheet" href="/css/bulma.min.css">
+</head>
+<body>
+<header th:replace="~{fragments/header.html :: header}"></header>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Edit Vacation Details</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Vacation Point</th>
+                <th>City Name</th>
+                <th>Country Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="point : ${vacationPoints}">
+                <form method="POST" action="/admin/saveDetails" th:object="${point.detailData}">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <td th:text="${point.city}"></td>
+                    <td>
+                        <input type="text" name="cityName" th:value="${point.city ?: ''}" required>
+                    </td>
+                    <td>
+                        <input type="text" name="countryName" th:value="${point.country ?: ''}" required>
+                    </td>
+                    <td>
+                        <input type="datetime-local" name="startDate" th:value="${point.startDate}" required>
+                    </td>
+                    <td>
+                        <input type="datetime-local" name="endDate" th:value="${point.endDate}" required>
+                    </td>
+                    <td>
+                        <textarea name="description" th:text="${point.description ?: ''}" required></textarea>
+                    </td>
+                    <td>
+                        <input type="number" step="0.000001" name="latitude" th:value="${point.latitude}" required>
+                    </td>
+                    <td>
+                        <input type="number" step="0.000001" name="longitude" th:value="${point.longitude}" required>
+                    </td>
+                    <input type="hidden" name="pointId" th:value="${point.id}">
+                    <td>
+                        <button type="submit" class="button is-primary">Save</button>
+                    </td>
+                </form>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <div th:if="${param.success}" class="notification is-success">
+        Successfully saved details!
+    </div>
+    <div th:if="${param.error}" class="notification is-danger">
+        Failed to save details. Please try again.
+    </div>
+</section>
+</body>
+</html>
