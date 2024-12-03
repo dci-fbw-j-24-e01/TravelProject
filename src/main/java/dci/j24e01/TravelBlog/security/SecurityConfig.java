@@ -23,7 +23,7 @@ public class SecurityConfig {
         String key = dotenv.get("rememberMeKey");
 
         httpSecurity.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/", "/css/**", "/icons/**", "/fonts/**", "/images/**","/photos","/admin_panel/add_vacation_point", "/submit", "/js/**").permitAll();
+            auth.requestMatchers("/", "/css/**", "/icons/**", "/fonts/**", "/images/**","/photos/**","/admin_panel/add_vacation_point", "/submit", "/js/**").permitAll();
             auth.requestMatchers("/admin_panel/**").hasRole("ADMIN");
             auth.requestMatchers("/admin").permitAll();
             auth.requestMatchers("admin_panel").authenticated();
