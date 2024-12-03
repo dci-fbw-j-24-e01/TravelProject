@@ -25,7 +25,10 @@ public class LocationController {
     // Handle form submission
     @PostMapping("/suggest-location")
     public String submitLocation(@ModelAttribute Location location) {
-        locationRepository.save(location);
+        Location saveLocation = locationRepository.save(location);
+        if (saveLocation == null) {
+            return "redirect:/suggest-location?error";
+        }
         return "redirect:/suggest-location?success";
     }
 }

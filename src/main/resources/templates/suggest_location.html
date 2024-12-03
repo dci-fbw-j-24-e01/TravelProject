@@ -17,6 +17,9 @@
         <div class="notification is-success" th:if="${param.success}">
             Location has been submitted successfully!
         </div>
+        <div class="notification is-danger" th:if="${param.error}">
+            There was an error. Try again or contact the administrator.
+        </div>
 
         <form method="POST" th:action="@{/suggest-location}" th:object="${location}">
             <div class="field">
