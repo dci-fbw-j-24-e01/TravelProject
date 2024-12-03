@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Vacation Point</title>
+</head>
+<body>
+<h1>Add Vacation Point</h1>
+<form method="POST" action="/admin_panel/add_vacation_point" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+    <input type="text" name="city" placeholder="City" required>
+    <input type="text" name="country" placeholder="Country" required>
+    <textarea name="description" placeholder="Description" required></textarea>
+    <label for="startDate">Start Date and Time:</label>
+    <input type="datetime-local" name="startDate" required>
+    <label for="endDate">End Date and Time:</label>
+    <input type="datetime-local" name="endDate" required>
+    <input type="file" name="photos" multiple>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
