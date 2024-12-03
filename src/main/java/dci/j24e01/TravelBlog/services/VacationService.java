@@ -23,8 +23,6 @@ import java.util.UUID;
 @Service
 public class VacationService {
 
-//    @Value("${file.upload-dir}")\
-
 
     @Autowired
     private VacationPointRepository vacationPointRepository;
