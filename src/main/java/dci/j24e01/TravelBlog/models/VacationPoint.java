@@ -8,50 +8,43 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "vacation_points")
 public class VacationPoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    private String city;
+    private String country;
     private String description;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
     private double latitude;
     private double longitude;
 
-    @Column(columnDefinition = "TEXT")
-    private String route;
+    private boolean approved;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @OneToOne(mappedBy = "vacationPoint", cascade = CascadeType.ALL)
+    private DetailData detailData;
+
 
     @OneToMany(mappedBy = "vacationPoint", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos;
 
-    @OneToOne(mappedBy = "vacationPoint", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private DetailData detailData;
-
-    private boolean approved;
-
     public VacationPoint() {
     }
 
-    public VacationPoint(Long id,
-                         String title,
-                         String description,
-                         double latitude,
-                         double longitude,
-                         String route,
-                         LocalDateTime createdAt,
-                         List<Photo> photos,
-                         DetailData detailData,
-                         boolean approved) {
+    public VacationPoint(Long id, String city, String country, String description, LocalDateTime startDate, LocalDateTime endDate, double latitude, double longitude, List<Photo> photos, DetailData detailData, boolean approved) {
         this.id = id;
-        this.title = title;
+        this.city = city;
+        this.country = country;
         this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.route = route;
-        this.createdAt = createdAt;
         this.photos = photos;
         this.detailData = detailData;
         this.approved = approved;
@@ -65,12 +58,20 @@ public class VacationPoint {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCity() {
+        return city;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getDescription() {
@@ -79,6 +80,22 @@ public class VacationPoint {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 
     public double getLatitude() {
@@ -97,36 +114,12 @@ public class VacationPoint {
         this.longitude = longitude;
     }
 
-    public String getRoute() {
-        return route;
-    }
-
-    public void setRoute(String route) {
-        this.route = route;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public List<Photo> getPhotos() {
         return photos;
     }
 
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
-    }
-
-    public boolean isApproved() {
-        return approved;
-    }
-
-    public void setApproved(boolean approved) {
-        this.approved = approved;
     }
 
     public DetailData getDetailData() {
@@ -137,31 +130,40 @@ public class VacationPoint {
         this.detailData = detailData;
     }
 
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        VacationPoint that = (VacationPoint) o;
-        return Double.compare(latitude, that.latitude) == 0 && Double.compare(longitude, that.longitude) == 0 && approved == that.approved && Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(route, that.route) && Objects.equals(createdAt, that.createdAt) && Objects.equals(photos, that.photos) && Objects.equals(detailData, that.detailData);
+        if (this == o) return true;
+        if (!(o instanceof VacationPoint that)) return false;
+        return Double.compare(latitude, that.latitude) == 0 && Double.compare(longitude, that.longitude) == 0 && approved == that.approved && Objects.equals(id, that.id) && Objects.equals(city, that.city) && Objects.equals(country, that.country) && Objects.equals(description, that.description) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(detailData, that.detailData) && Objects.equals(photos, that.photos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, latitude, longitude, route, createdAt, photos, detailData, approved);
+        return Objects.hash(id, city, country, description, startDate, endDate, latitude, longitude, approved, detailData, photos);
     }
 
     @Override
     public String toString() {
         return "VacationPoint{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
                 ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", route='" + route + '\'' +
-                ", createdAt=" + createdAt +
-                ", photos=" + photos +
-                ", detailData=" + detailData +
                 ", approved=" + approved +
+                ", detailData=" + detailData +
+                ", photos=" + photos +
                 '}';
     }
 }

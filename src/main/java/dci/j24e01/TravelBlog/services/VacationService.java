@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,17 +33,26 @@ public class VacationService {
     private PhotoRepository photoRepository;
 
     @Autowired
+    private GeocodingService geocodingService;
+
+    @Autowired
     private RouteRepository routeRepository;
+
+
 
     public List<VacationPoint> getAllVacationPoints() {
         return vacationPointRepository.findAll();
     }
 
-    public void saveVacationPoint(String title, String description, double latitude, double longitude, MultipartFile[] photos, String routeGeoJson)  {
+    public List<VacationPoint> getAllApprovedVacationPoints() {
+        return vacationPointRepository.findAllByApprovedTrue();  // Этот метод будет использоваться для фильтрации
+    }
+
+    public void saveVacationPoint(String city, String description, double latitude, double longitude, MultipartFile[] photos, String routeGeoJson)  {
         VacationPoint vacationPoint = new VacationPoint();
 
 
-        vacationPoint.setTitle(title);
+        vacationPoint.setCity(city);
         vacationPoint.setDescription(description);
         vacationPoint.setLatitude(latitude);
         vacationPoint.setLongitude(longitude);
@@ -55,8 +65,6 @@ public class VacationService {
             List<Photo> photoList = new ArrayList<>();
             for (MultipartFile photo : photos) {
                 try {
-                    System.out.println(photo.getName());
-                    System.out.println(photo.getSize());
                     String extension = "";
                     int dotIndex = photo.getOriginalFilename().lastIndexOf(".");
                     if (dotIndex >= 0) {

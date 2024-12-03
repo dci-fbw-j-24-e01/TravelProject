@@ -32,7 +32,6 @@ public class DetailDataController {
         DetailData detailData = detailDataService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Detail not found"));
 
-
         Map<String, Object> weatherData = weatherService.getWeather(detailData.getCityName());
         if (weatherData != null && weatherData.containsKey("main")) {
             Map<String, Object> mainData = (Map<String, Object>) weatherData.get("main");
