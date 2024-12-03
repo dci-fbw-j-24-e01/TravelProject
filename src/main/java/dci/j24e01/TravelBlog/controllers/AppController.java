@@ -96,14 +96,6 @@ public class AppController {
         return "redirect:/";
     }
 
-    @GetMapping("/admin_panel")
-    public String adminPanel(Model model, Authentication authentication) {
-        boolean isLoggedIn = authentication != null && authentication.isAuthenticated();
-        model.addAttribute("vacationPoints", adminService.getAllVacationPoints());
-        model.addAttribute("loggedIn", isLoggedIn);
-        return "admin_panel";
-    }
-
     @GetMapping("/admin_panel/add_vacation_point")
     public String addVacationPointForm(Model model) {
         return "add_vacation_point";
