@@ -76,6 +76,7 @@ public class DetailDataController {
         detailData.setLatitude(latitude);
         detailData.setLongitude(longitude);
 
+
         // Update the photos collection
         detailData.getPhotos().clear(); // Clear existing photos. Needed in case we wanted to update the photos List
         detailData.getPhotos().addAll(vacationPoint.getPhotos()); // Add all photos from VacationPoint

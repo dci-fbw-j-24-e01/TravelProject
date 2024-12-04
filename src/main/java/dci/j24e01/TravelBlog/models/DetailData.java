@@ -3,6 +3,7 @@ package dci.j24e01.TravelBlog.models;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -119,6 +120,9 @@ public class DetailData {
     }
 
     public List<Photo> getPhotos() {
+        if (photos == null) {
+            photos = new ArrayList<>();
+        }
         return photos;
     }
 
