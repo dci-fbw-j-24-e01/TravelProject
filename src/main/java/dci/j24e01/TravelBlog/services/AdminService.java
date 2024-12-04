@@ -5,6 +5,8 @@ import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.repositories.PhotoRepository;
 import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,15 +56,19 @@ public class AdminService {
             List<Photo> photoList = new ArrayList<>();
             for (MultipartFile photo : photos) {
                 try {
+
                     String filename = UUID.randomUUID() + "." + photo.getOriginalFilename().split("\\.")[1];
                     Path destination = Path.of("src/main/resources/static/photos", filename);
                     photo.transferTo(destination);
-
                     Photo photoEntity = new Photo();
                     photoEntity.setPhotoPath(filename);
                     photoEntity.setVacationPoint(savedPoint);
                     photoList.add(photoEntity);
 
+                    Resource staticResource = new ClassPathResource("static");
+                    Path targetUploadsPath = Path.of(staticResource.getURI()).resolve("photos");
+                    Path targetDestination = targetUploadsPath.resolve(filename);
+                    photo.transferTo(targetDestination);
                 } catch (Exception e) {
                     throw new RuntimeException("Error saving photo", e);
                 }
