@@ -4,13 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Vacation Point</title>
+    <style>
+        .suggestions {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            background-color: white;
+            z-index: 1000;
+        }
+
+        .suggestions li {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .suggestions li:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
 <h1>Add Vacation Point</h1>
 <form method="POST" action="/admin_panel/add_vacation_point" enctype="multipart/form-data">
     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-    <input type="text" name="city" placeholder="City" required>
-    <input type="text" name="country" placeholder="Country" required>
+    <input type="text" id="city" name="city" placeholder="City" required oninput="fetchSuggestions('city', this.value)">
+    <ul id="citySuggestions" class="suggestions"></ul>
+    <input type="text" id="country" name="country" placeholder="Country" required oninput="fetchSuggestions('country', this.value)">
+    <ul id="countrySuggestions" class="suggestions"></ul>
     <textarea name="description" placeholder="Description" required></textarea>
     <label for="startDate">Start Date and Time:</label>
     <input type="date" name="startDate" required>
@@ -19,5 +43,50 @@
     <input type="file" name="photos" multiple>
     <button type="submit">Submit</button>
 </form>
+<script>
+    async function fetchSuggestions(type, query) {
+        const suggestionsElement = document.getElementById(`${type}Suggestions`);
+        if (query.length < 3) {
+            suggestionsElement.innerHTML = '';
+            return;
+        }
+
+        const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&accept-language=en&q=${encodeURIComponent(query)}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+
+            suggestionsElement.innerHTML = '';
+
+
+            data.forEach((item) => {
+                let suggestionText = '';
+                if (type === 'city' && item.address.city) {
+                    suggestionText = item.address.city;
+                } else if (type === 'country' && item.address.country) {
+                    suggestionText = item.address.country;
+                }
+
+                if (suggestionText) {
+                    const li = document.createElement('li');
+                    li.textContent = suggestionText;
+                    li.onclick = () => selectSuggestion(type, suggestionText);
+                    suggestionsElement.appendChild(li);
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+        }
+    }
+
+    function selectSuggestion(type, value) {
+        document.getElementById(type).value = value;
+        document.getElementById(`${type}Suggestions`).innerHTML = '';
+    }
+
+
+</script>
 </body>
 </html>
