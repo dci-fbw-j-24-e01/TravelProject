@@ -84,7 +84,7 @@ public class DetailDataController {
 
         // Save the updated DetailData
         detailDataService.saveDetailData(detailData);
-        System.out.println(detailData);
+//        System.out.println(detailData);
 
         // Redirect back to the admin page with a success message
         return "redirect:/admin/editDetails?success";
