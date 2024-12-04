@@ -69,21 +69,21 @@ public class AdminController {
         return "admin_panel";
     }
 
-    // Handle the form submission to update the status
+
     @PostMapping("/save_status/{id}")
     public String saveStatus(@RequestParam("status") PendingLocation.Status status,
                              @PathVariable("id") Integer id,
                              Model model) {
-        // Fetch the PendingLocation by ID
+
         PendingLocation pendingLocation = pendingLocationRepository.findById(id).orElse(null);
 
         if (pendingLocation != null) {
-            // Update the status
+
             pendingLocation.setStatus(status);
-            pendingLocationRepository.save(pendingLocation); // Save the updated status to the DB
+            pendingLocationRepository.save(pendingLocation);
         }
 
-        // Redirect back to the admin panel
+
         return "redirect:/admin_panel";
     }
 
