@@ -1,19 +1,20 @@
 package dci.j24e01.TravelBlog.controllers;
 
 import dci.j24e01.TravelBlog.models.HeroSettings;
-import dci.j24e01.TravelBlog.models.Location;
 import dci.j24e01.TravelBlog.models.PendingLocation;
+import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.repositories.HeroSettingsRepository;
-import dci.j24e01.TravelBlog.repositories.LocationRepository;
 import dci.j24e01.TravelBlog.repositories.PendingLocationRepository;
+import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
+import dci.j24e01.TravelBlog.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -21,7 +22,10 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private LocationRepository locationRepository;
+    private AdminService adminService;
+
+    @Autowired
+    private VacationPointRepository vacationPointRepository;
 
     @Autowired
     private PendingLocationRepository pendingLocationRepository;
@@ -29,12 +33,10 @@ public class AdminController {
     @Autowired
     private HeroSettingsRepository heroSettingsRepository;
 
-    // Display Admin Panel
     @GetMapping
     public String adminPanel(Model model) {
-        // Fetch hero settings (one row expected)
         HeroSettings heroSettings = heroSettingsRepository.findTopByOrderByIdDesc();
-        List<Location> locations = locationRepository.findAll();
+        List<VacationPoint> locations = vacationPointRepository.findAll();
         List<PendingLocation> pendingLocations = pendingLocationRepository.findAll();
 
         model.addAttribute("heroSettings", heroSettings);
@@ -43,55 +45,51 @@ public class AdminController {
         return "admin_panel";
     }
 
-    @GetMapping("/hero_settings")
-    public String getHeroSettings(Model model) {
-        HeroSettings heroSettings = heroSettingsRepository.findAll().stream().findFirst().orElse(null); // Or retrieve it based on ID if needed
-        model.addAttribute("heroSettings", heroSettings);
-        return "admin_panel"; // The name of the admin panel view
-    }
-
-/*    // Handle saving Hero Settings
-    @PostMapping("/hero_settings")
-    public String saveHeroSettings(@RequestParam("background_image_url") String backgroundImageUrl,
-                                   @RequestParam("title") String title) {
-        // Check if hero settings exist
-        HeroSettings heroSettings = heroSettingsRepository.findTopByOrderByIdDesc();
-
-        if (heroSettings == null) {
-            heroSettings = new HeroSettings();
-        }
-
-        heroSettings.setBackgroundImageUrl(backgroundImageUrl);
-        heroSettings.setTitle(title);
-        heroSettings.setUpdatedAt(LocalDate.now());
-
-        heroSettingsRepository.save(heroSettings);
-
-        return "redirect:/admin_panel"; // Redirect back to the admin panel
-    }*/
-
     @PostMapping("/hero_settings")
     public String saveHeroSettings(@RequestParam("background_image_url") String backgroundImageUrl,
                                    @RequestParam("title") String title, Model model) {
 
         HeroSettings heroSettings = heroSettingsRepository.findAll().stream().findFirst().orElse(new HeroSettings());
 
-
         heroSettings.setBackgroundImageUrl(backgroundImageUrl);
         heroSettings.setTitle(title);
 
-
         heroSettingsRepository.save(heroSettings);
 
-
         model.addAttribute("heroSettings", heroSettings);
-
 
         return "admin_panel";
     }
 
+    @GetMapping("/edit_location/{id}")
+    public String editLocation(@PathVariable long id, Model model) {
+        VacationPoint point = adminService.findVacationPointById(id);
+        model.addAttribute("city", point.getCity());
+        model.addAttribute("country", point.getCountry());
+        model.addAttribute("description", point.getDescription());
+        model.addAttribute("startDate", point.getStartDate());
+        model.addAttribute("endDate", point.getEndDate());
+        model.addAttribute("id", id);
+
+        return "edit_vacation_point";
+    }
+
+    @PostMapping("/edit_location")
+    public String editLocation(@RequestParam Long id,
+                               @RequestParam String city,
+                               @RequestParam String country,
+                               @RequestParam String description,
+                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                               @RequestParam MultipartFile[] photos) {
+
+        adminService.saveVacationPoint(id, city, country, description, startDate, endDate, photos);
+        return "redirect:/admin_panel";
+    }
+
+    @GetMapping("delete_location/{id}")
+    public String deleteLocation(@PathVariable long id) {
+        adminService.deleteVacationPoint(id);
+        return "redirect:/admin_panel";
+    }
 }
-
-// Other mappings for approving, rejecting, editing locations
-
-

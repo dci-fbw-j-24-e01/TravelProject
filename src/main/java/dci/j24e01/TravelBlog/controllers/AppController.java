@@ -97,7 +97,7 @@ public class AppController {
     }
 
     @GetMapping("/admin_panel/add_vacation_point")
-    public String addVacationPointForm(Model model) {
+    public String addVacationPointForm() {
         return "add_vacation_point";
     }
 

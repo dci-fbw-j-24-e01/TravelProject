@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Travel Blog</title>
-    <!-- Bulma CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css"> <!-- External custom CSS if needed -->
     <link rel="stylesheet" href="/css/bulma.min.css">
     <link rel="stylesheet" href="/css/main.css">
 </head>
@@ -22,15 +19,8 @@
         <h2 class="title is-4">Hero Section Settings</h2>
         <!-- Change the form action to the same page: /admin_panel -->
 
-        <!-- HELDER: the post mapping needs to goto admin_panel/hero_settings
-                because the controller that is saving the data for the hero settings
-                is in the AdminController.java file
-                in a PostMapping for /hero_settings
-                and because the full controller has a RequesMapping for admin_panel
-                -->
         <form action="/admin_panel/hero_settings" method="POST">
 
-            <!-- HELDER: the csrf.token value needs to be in a th: property or else thymeleaf will not render it dynamically -->
             <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
             <div class="field">
                 <label class="label">Background Image URL</label>
@@ -73,10 +63,10 @@
             <tr th:each="location : ${locations}">
                 <td th:text="${location.city}"></td>
                 <td th:text="${location.country}"></td>
-                <td th:text="${location.visitDate}"></td>
+                <td th:text="${location.startDate}"></td>
                 <td>
-                    <a class="button is-info" href="/admin_panel/edit_location/{location.id}">Edit</a>
-                    <a class="button is-danger" href="/admin_panel/delete_location/{location.id}">Delete</a>
+                    <a class="button is-info" th:href="@{/admin_panel/edit_location/{id}(id = ${location.id})}">Edit</a>
+                    <a class="button is-danger" th:href="@{/admin_panel/delete_location/{id}(id = ${location.id})}">Delete</a>
                 </td>
             </tr>
             </tbody>
@@ -110,60 +100,7 @@
     </div>
 </div>
 
-<!-- Footer -->
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
 </body>
 </html>
-
-
-
-
-
-<!-- OLDER VERSION -->
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head>-->
-<!--    <title>Admin Dashboard</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<header th:replace="~{fragments/header.html :: header}"> </header>-->
-<!--<h1>Admin Dashboard</h1>-->
-<!--<a href="/logout">Logout</a>-->
-<!--<table border="1">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th>Title</th>-->
-<!--        <th>Description</th>-->
-<!--        <th>Latitude</th>-->
-<!--        <th>Longitude</th>-->
-<!--        <th>Route</th>-->
-<!--        <th>Approved</th>-->
-<!--        <th>Actions</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr th:each="point : ${vacationPoints}">-->
-<!--        <td th:text="${point.title}"></td>-->
-<!--        <td th:text="${point.description}"></td>-->
-<!--        <td th:text="${point.latitude}"></td>-->
-<!--        <td th:text="${point.longitude}"></td>-->
-<!--        <td th:text="${point.route}"></td>-->
-<!--        <td th:text="${point.approved ? 'Yes' : 'No'}"></td>-->
-<!--        <td>-->
-<!--            <form method="POST" action="/delete">-->
-<!--                <input type="hidden" name="_csrf" th:value="${_csrf.token}">-->
-<!--                <input type="hidden" name="id" th:value="${point.id}">-->
-<!--                <button type="submit">Delete</button>-->
-<!--            </form>-->
-<!--            <form th:if="${!point.approved}" method="POST" action="/approve">-->
-<!--                <input type="hidden" name="_csrf" th:value="${_csrf.token}">-->
-<!--                <input type="hidden" name="id" th:value="${point.id}">-->
-<!--                <button type="submit">Approve</button>-->
-<!--            </form>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-<!--</body>-->
-<!--</html>-->
