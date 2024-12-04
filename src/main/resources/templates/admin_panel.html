@@ -73,7 +73,7 @@
             <tr th:each="location : ${locations}">
                 <td th:text="${location.city}"></td>
                 <td th:text="${location.country}"></td>
-                <td th:text="${location.visitDate}"></td>
+<!--                <td th:text="${location.visitDate}"></td>-->
                 <td>
                     <a class="button is-info" href="/admin_panel/edit_location/{location.id}">Edit</a>
                     <a class="button is-danger" href="/admin_panel/delete_location/{location.id}">Delete</a>
