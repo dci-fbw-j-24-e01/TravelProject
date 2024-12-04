@@ -2,7 +2,6 @@ package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
