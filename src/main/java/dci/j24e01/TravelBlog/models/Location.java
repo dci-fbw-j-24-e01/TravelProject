@@ -1,9 +1,6 @@
 package dci.j24e01.TravelBlog.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,10 +17,8 @@ public class Location {
     private String city;
     private String country;
 
-    private double latitude;
-    private double longitude;
-
-    private String thumbnailUrl;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
     @CreationTimestamp
     private LocalDate createdAt;
@@ -55,28 +50,12 @@ public class Location {
         this.country = country;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
-    }
-
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDate getCreatedAt() {
@@ -99,11 +78,23 @@ public class Location {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Location location = (Location) o;
-        return Double.compare(latitude, location.latitude) == 0 && Double.compare(longitude, location.longitude) == 0 && Objects.equals(id, location.id) && Objects.equals(city, location.city) && Objects.equals(country, location.country) && Objects.equals(thumbnailUrl, location.thumbnailUrl) && Objects.equals(createdAt, location.createdAt) && Objects.equals(updatedAt, location.updatedAt);
+        return Objects.equals(id, location.id) && Objects.equals(city, location.city) && Objects.equals(country, location.country) && Objects.equals(description, location.description) && Objects.equals(createdAt, location.createdAt) && Objects.equals(updatedAt, location.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, city, country, latitude, longitude, thumbnailUrl, createdAt, updatedAt);
+        return Objects.hash(id, city, country, description, createdAt, updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", description='" + description + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
