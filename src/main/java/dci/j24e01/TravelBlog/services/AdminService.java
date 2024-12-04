@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -77,7 +78,7 @@ public class AdminService {
         }
     }
 
-    public void saveVacationPoint(Long id, String city, String country, String description, LocalDateTime startDate, LocalDateTime endDate, MultipartFile[] photos) {
+    public void saveVacationPoint(Long id, String city, String country, String description, LocalDate startDate, LocalDate endDate, MultipartFile[] photos) {
         double[] coordinates = geocodingService.getCoordinates(city, country);
 
         VacationPoint vacationPoint = findVacationPointById(id);
