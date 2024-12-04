@@ -2,10 +2,8 @@ package dci.j24e01.TravelBlog.services;
 
 
 import dci.j24e01.TravelBlog.models.Photo;
-import dci.j24e01.TravelBlog.models.Route;
 import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.repositories.PhotoRepository;
-import dci.j24e01.TravelBlog.repositories.RouteRepository;
 import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -15,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,8 +30,6 @@ public class VacationService {
     @Autowired
     private GeocodingService geocodingService;
 
-    @Autowired
-    private RouteRepository routeRepository;
 
 
 
@@ -93,12 +88,6 @@ public class VacationService {
             photoRepository.saveAll(photoList);
         }
 
-        if (routeGeoJson != null && !routeGeoJson.isEmpty()) {
-            Route route = new Route();
-            route.setGeoJson(routeGeoJson);
-            route.setVacationPoint(savedPoint);
-            routeRepository.save(route);
-        }
     }
 
     public void deleteVacationPoint(Long id) {

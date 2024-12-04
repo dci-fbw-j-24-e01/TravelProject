@@ -63,7 +63,7 @@ public class AdminController {
 
         heroSettings.setBackgroundImageUrl(backgroundImageUrl);
         heroSettings.setTitle(title);
-        heroSettings.setUpdatedAt(LocalDateTime.now());
+        heroSettings.setUpdatedAt(LocalDate.now());
 
         heroSettingsRepository.save(heroSettings);
 

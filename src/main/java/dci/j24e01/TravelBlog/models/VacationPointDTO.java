@@ -1,6 +1,6 @@
 package dci.j24e01.TravelBlog.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,14 +10,14 @@ public class VacationPointDTO {
     private String description;
     private double latitude;
     private double longitude;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private List<String> photos;
 
     public VacationPointDTO() {
     }
 
-    public VacationPointDTO(String city, String country, String description, double latitude, double longitude, LocalDateTime startDate, LocalDateTime endDate, List<String> photos) {
+    public VacationPointDTO(String city, String country, String description, double latitude, double longitude, LocalDate startDate, LocalDate endDate, List<String> photos) {
         this.city = city;
         this.country = country;
         this.description = description;
@@ -68,19 +68,19 @@ public class VacationPointDTO {
         this.longitude = longitude;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
