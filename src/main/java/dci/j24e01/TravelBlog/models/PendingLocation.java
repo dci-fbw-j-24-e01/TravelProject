@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class PendingLocation {
@@ -70,5 +71,28 @@ public class PendingLocation {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        PendingLocation that = (PendingLocation) o;
+        return Objects.equals(id, that.id) && Objects.equals(location, that.location) && status == that.status && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, location, status, createdAt, updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "PendingLocation{" +
+                "id=" + id +
+                ", location=" + location +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
