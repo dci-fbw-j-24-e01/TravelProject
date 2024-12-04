@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +35,7 @@ public class AdminService {
         return vacationPointRepository.findAll();
     }
 
-    public void saveVacationPoint(String city, String country, String description, LocalDateTime startDate, LocalDateTime endDate, MultipartFile[] photos) {
+    public void saveVacationPoint(String city, String country, String description, LocalDate startDate, LocalDate endDate, MultipartFile[] photos) {
         double[] coordinates = geocodingService.getCoordinates(city, country);
 
         VacationPoint vacationPoint = new VacationPoint();

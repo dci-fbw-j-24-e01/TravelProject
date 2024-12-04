@@ -1,6 +1,5 @@
 package dci.j24e01.TravelBlog.models;
 
-import dci.j24e01.TravelBlog.models.User;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -17,9 +16,8 @@ public class PendingLocation {
     private Date visitDate;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "suggested_by", referencedColumnName = "id")
-    private User suggestedBy; // Assume a 'User' entity exists for the admin user
+
+
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -73,13 +71,7 @@ public class PendingLocation {
         this.description = description;
     }
 
-    public User getSuggestedBy() {
-        return suggestedBy;
-    }
 
-    public void setSuggestedBy(User suggestedBy) {
-        this.suggestedBy = suggestedBy;
-    }
 
     public Status getStatus() {
         return status;

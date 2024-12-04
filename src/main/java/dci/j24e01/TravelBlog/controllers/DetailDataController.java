@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -52,8 +52,8 @@ public class DetailDataController {
             @RequestParam Long pointId,
             @RequestParam String cityName,
             @RequestParam String countryName,
-            @RequestParam LocalDateTime startDate,
-            @RequestParam LocalDateTime endDate,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate,
             @RequestParam String description,
             @RequestParam double latitude,
             @RequestParam double longitude
