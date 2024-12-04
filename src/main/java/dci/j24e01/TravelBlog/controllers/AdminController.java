@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -43,7 +42,7 @@ public class AdminController {
         model.addAttribute("heroSettings", heroSettings);
         model.addAttribute("locations", locations);
         model.addAttribute("pendingLocations", pendingLocations);
-        return "admin_panel";
+        return "admin/admin_panel";
     }
 
     @PostMapping("/hero_settings")
@@ -59,7 +58,7 @@ public class AdminController {
 
         model.addAttribute("heroSettings", heroSettings);
 
-        return "admin_panel";
+        return "/admin/admin_panel";
     }
 
     @GetMapping("/edit_location/{id}")
@@ -72,7 +71,7 @@ public class AdminController {
         model.addAttribute("endDate", point.getEndDate());
         model.addAttribute("id", id);
 
-        return "edit_vacation_point";
+        return "/admin/edit_vacation_point";
     }
 
     @PostMapping("/edit_location")
