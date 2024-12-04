@@ -30,7 +30,7 @@
         <!-- Slideshow -->
         <div class="slideshow-container">
             <div class="mySlides" th:each="url, iterStat : ${detailData.photos}">
-                <img th:src="${url.photoPath}" style="width:100%" alt="Gallery Image">
+                <img th:src="@{'/photos/' + ${url.photoPath}}" style="width:100%" alt="Gallery Image">
             </div>
 
             <!-- Navigation -->
