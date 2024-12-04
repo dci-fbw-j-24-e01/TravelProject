@@ -29,10 +29,10 @@ public class AdminController {
     @Autowired
     private HeroSettingsRepository heroSettingsRepository;
 
-    // Display Admin Panel
+
     @GetMapping
     public String adminPanel(Model model) {
-        // Fetch hero settings (one row expected)
+
         HeroSettings heroSettings = heroSettingsRepository.findTopByOrderByIdDesc();
         List<Location> locations = locationRepository.findAll();
         List<PendingLocation> pendingLocations = pendingLocationRepository.findAll();
@@ -45,30 +45,11 @@ public class AdminController {
 
     @GetMapping("/hero_settings")
     public String getHeroSettings(Model model) {
-        HeroSettings heroSettings = heroSettingsRepository.findAll().stream().findFirst().orElse(null); // Or retrieve it based on ID if needed
+        HeroSettings heroSettings = heroSettingsRepository.findAll().stream().findFirst().orElse(null);
         model.addAttribute("heroSettings", heroSettings);
-        return "admin_panel"; // The name of the admin panel view
+        return "admin_panel";
     }
 
-/*    // Handle saving Hero Settings
-    @PostMapping("/hero_settings")
-    public String saveHeroSettings(@RequestParam("background_image_url") String backgroundImageUrl,
-                                   @RequestParam("title") String title) {
-        // Check if hero settings exist
-        HeroSettings heroSettings = heroSettingsRepository.findTopByOrderByIdDesc();
-
-        if (heroSettings == null) {
-            heroSettings = new HeroSettings();
-        }
-
-        heroSettings.setBackgroundImageUrl(backgroundImageUrl);
-        heroSettings.setTitle(title);
-        heroSettings.setUpdatedAt(LocalDate.now());
-
-        heroSettingsRepository.save(heroSettings);
-
-        return "redirect:/admin_panel"; // Redirect back to the admin panel
-    }*/
 
     @PostMapping("/hero_settings")
     public String saveHeroSettings(@RequestParam("background_image_url") String backgroundImageUrl,
@@ -92,6 +73,6 @@ public class AdminController {
 
 }
 
-// Other mappings for approving, rejecting, editing locations
+
 
 
