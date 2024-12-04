@@ -29,16 +29,17 @@ public class AdminController {
     @Autowired
     private HeroSettingsRepository heroSettingsRepository;
 
-
+    // Display Admin Panel
     @GetMapping
     public String adminPanel(Model model) {
 
         HeroSettings heroSettings = heroSettingsRepository.findTopByOrderByIdDesc();
-        List<Location> locations = locationRepository.findAll();
+
+//        List<Location> locations = locationRepository.findAll();  //TODO: front end has to be rearranged, otherwise you get an error
         List<PendingLocation> pendingLocations = pendingLocationRepository.findAll();
 
         model.addAttribute("heroSettings", heroSettings);
-        model.addAttribute("locations", locations);
+//        model.addAttribute("locations", locations);  //TODO: front end has to be rearranged, otherwise you get an error
         model.addAttribute("pendingLocations", pendingLocations);
         return "admin_panel";
     }

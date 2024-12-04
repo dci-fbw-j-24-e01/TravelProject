@@ -83,7 +83,6 @@
         </table>
     </div>
 
-    <!-- Pending Locations Section -->
     <div class="box">
         <h2 class="title is-4">Pending Location Suggestions</h2>
         <table class="table is-fullwidth is-striped">
@@ -91,23 +90,30 @@
             <tr>
                 <th>City</th>
                 <th>Country</th>
+                <th>Description</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="pendingLocation : ${pendingLocations}">
-                <td th:text="${pendingLocation.city}"></td>
-                <td th:text="${pendingLocation.country}"></td>
+                <td th:text="${pendingLocation.location.city}"></td>
+                <td th:text="${pendingLocation.location.country}"></td>
+                <td th:text="${pendingLocation.location.description}"></td>
                 <td th:text="${pendingLocation.status}"></td>
                 <td>
-                    <a class="button is-success" href="/admin_panel/approve_location/{pendingLocation.id}">Approve</a>
-                    <a class="button is-danger" href="/admin_panel/reject_location/{pendingLocation.id}">Reject</a>
+                    <form th:action="@{'/admin_panel/approve_location/' + ${pendingLocation.id}}" method="post" style="display:inline;">
+                        <button class="button is-success">Approve</button>
+                    </form>
+                    <form th:action="@{'/admin_panel/reject_location/' + ${pendingLocation.id}}" method="post" style="display:inline;">
+                        <button class="button is-danger">Reject</button>
+                    </form>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+
 </div>
 
 <!-- Footer -->
