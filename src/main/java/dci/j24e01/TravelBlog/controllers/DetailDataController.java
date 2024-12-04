@@ -1,7 +1,6 @@
 package dci.j24e01.TravelBlog.controllers;
 
 import dci.j24e01.TravelBlog.models.DetailData;
-import dci.j24e01.TravelBlog.models.Photo;
 import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.services.DetailDataService;
 import dci.j24e01.TravelBlog.services.VacationService;
@@ -108,9 +107,6 @@ public class DetailDataController {
                 }
             }
         }
-
-        System.out.println("----------" + detailData);
-
 
         model.addAttribute("detailData", detailData);
         model.addAttribute("photos", detailData.getPhotos());
