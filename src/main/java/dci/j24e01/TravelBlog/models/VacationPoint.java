@@ -3,7 +3,7 @@ package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,8 +18,8 @@ public class VacationPoint {
     private String city;
     private String country;
     private String description;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     private double latitude;
     private double longitude;
@@ -36,7 +36,7 @@ public class VacationPoint {
     public VacationPoint() {
     }
 
-    public VacationPoint(Long id, String city, String country, String description, LocalDateTime startDate, LocalDateTime endDate, double latitude, double longitude, List<Photo> photos, DetailData detailData, boolean approved) {
+    public VacationPoint(Long id, String city, String country, String description, LocalDate startDate, LocalDate endDate, double latitude, double longitude, List<Photo> photos, DetailData detailData, boolean approved) {
         this.id = id;
         this.city = city;
         this.country = country;
@@ -82,19 +82,19 @@ public class VacationPoint {
         this.description = description;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

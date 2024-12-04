@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -38,8 +38,8 @@ public class editDetailDataController {
             @RequestParam Long pointId,
             @RequestParam String cityName,
             @RequestParam String countryName,
-            @RequestParam LocalDateTime startDate,
-            @RequestParam LocalDateTime endDate,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate,
             @RequestParam String description,
             @RequestParam double latitude,
             @RequestParam double longitude
