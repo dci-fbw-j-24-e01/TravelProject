@@ -15,8 +15,8 @@ public class DetailData {
 
     private String cityName;
     private String countryName;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String description;
 
     private double latitude;
@@ -39,7 +39,7 @@ public class DetailData {
 
     }
 
-    public DetailData(Long id, String cityName, String countryName, LocalDate startDate, LocalDate endDate, String description, double latitude, double longitude, List<Photo> photos, VacationPoint vacationPoint, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public DetailData(Long id, String cityName, String countryName, LocalDateTime startDate, LocalDateTime endDate, String description, double latitude, double longitude, List<Photo> photos, VacationPoint vacationPoint, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.cityName = cityName;
         this.countryName = countryName;
@@ -78,19 +78,19 @@ public class DetailData {
         this.countryName = countryName;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -185,7 +185,7 @@ public class DetailData {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", photos=" + photos +
-                ", vacationPoint=" + vacationPoint +
+                ", vacationPoint=" + vacationPoint.getId() +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
