@@ -9,10 +9,7 @@ import dci.j24e01.TravelBlog.repositories.PendingLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -72,7 +69,27 @@ public class AdminController {
         return "admin_panel";
     }
 
+    // Handle the form submission to update the status
+    @PostMapping("/save_status/{id}")
+    public String saveStatus(@RequestParam("status") PendingLocation.Status status,
+                             @PathVariable("id") Integer id,
+                             Model model) {
+        // Fetch the PendingLocation by ID
+        PendingLocation pendingLocation = pendingLocationRepository.findById(id).orElse(null);
+
+        if (pendingLocation != null) {
+            // Update the status
+            pendingLocation.setStatus(status);
+            pendingLocationRepository.save(pendingLocation); // Save the updated status to the DB
+        }
+
+        // Redirect back to the admin panel
+        return "redirect:/admin_panel";
+    }
+
 }
+
+
 
 
 

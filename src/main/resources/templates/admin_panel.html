@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,32 +58,6 @@
 
     <!-- Locations Section -->
     <div class="box">
-        <h2 class="title is-4">Manage Locations</h2>
-        <a class="button is-primary" href="/admin_panel/add_vacation_point">Add New Location</a>
-        <table class="table is-fullwidth is-striped">
-            <thead>
-            <tr>
-                <th>City</th>
-                <th>Country</th>
-                <th>Visit Date</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="location : ${locations}">
-                <td th:text="${location.city}"></td>
-                <td th:text="${location.country}"></td>
-                <td th:text="${location.visitDate}"></td>
-                <td>
-                    <a class="button is-info" href="/admin_panel/edit_location/{location.id}">Edit</a>
-                    <a class="button is-danger" href="/admin_panel/delete_location/{location.id}">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="box">
         <h2 class="title is-4">Pending Location Suggestions</h2>
         <table class="table is-fullwidth is-striped">
             <thead>
@@ -92,7 +66,6 @@
                 <th>Country</th>
                 <th>Description</th>
                 <th>Status</th>
-                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -100,19 +73,29 @@
                 <td th:text="${pendingLocation.location.city}"></td>
                 <td th:text="${pendingLocation.location.country}"></td>
                 <td th:text="${pendingLocation.location.description}"></td>
-                <td th:text="${pendingLocation.status}"></td>
                 <td>
-                    <form th:action="@{'/admin_panel/approve_location/' + ${pendingLocation.id}}" method="post" style="display:inline;">
-                        <button class="button is-success">Approve</button>
-                    </form>
-                    <form th:action="@{'/admin_panel/reject_location/' + ${pendingLocation.id}}" method="post" style="display:inline;">
-                        <button class="button is-danger">Reject</button>
+                    <!-- Dropdown for status selection -->
+                    <form th:action="@{'/admin_panel/save_status/' + ${pendingLocation.id}}" method="post" style="display:inline;">
+                        <div class="select">
+                            <select name="status">
+                                <option th:value="PENDING" th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).PENDING.name()}"
+                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).PENDING}">Pending</option>
+                                <option th:value="APPROVED" th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).APPROVED.name()}"
+                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).APPROVED}">Approved</option>
+                                <option th:value="REJECTED" th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).REJECTED.name()}"
+                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).REJECTED}">Rejected</option>
+                            </select>
+                        </div>
+                        <button class="button is-info">Save</button>
                     </form>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+
+
+
 
 </div>
 
