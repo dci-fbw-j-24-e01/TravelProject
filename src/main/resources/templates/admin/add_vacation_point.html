@@ -4,20 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Vacation Point</title>
+    <link rel="stylesheet" href="/css/bulma.min.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
 </head>
 <body>
-<h1>Add Vacation Point</h1>
-<form method="POST" action="/admin_panel/add_vacation_point" enctype="multipart/form-data">
-    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-    <input type="text" name="city" placeholder="City" required>
-    <input type="text" name="country" placeholder="Country" required>
-    <textarea name="description" placeholder="Description" required></textarea>
-    <label for="startDate">Start Date and Time:</label>
-    <input type="date" name="startDate" required>
-    <label for="endDate">End Date and Time:</label>
-    <input type="date" name="endDate" required>
-    <input type="file" name="photos" multiple>
-    <button type="submit">Submit</button>
-</form>
+<header th:replace="~{fragments/header.html :: header}"></header>
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Add Vacation Point</h1>
+
+        <!-- Success and Error Notifications -->
+        <div class="notification is-success" th:if="${param.success}">
+            Vacation point added successfully!
+        </div>
+        <div class="notification is-danger" th:if="${param.error}">
+            An error occurred. Please try again.
+        </div>
+
+        <form method="POST" action="/admin_panel/add_vacation_point" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+            <!-- Row for City and Country -->
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">City</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-medium" type="text" name="city" placeholder="Enter city name" required>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-city"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Country</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-medium" type="text" name="country" placeholder="Enter country name" required>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-flag"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="field">
+                <label class="label">Description</label>
+                <div class="control">
+                    <textarea class="textarea is-medium" name="description" placeholder="Enter a description" required></textarea>
+                </div>
+            </div>
+
+            <!-- Start and End Dates -->
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Start Date</label>
+                        <div class="control">
+                            <input class="input is-medium" type="date" name="startDate" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">End Date</label>
+                        <div class="control">
+                            <input class="input is-medium" type="date" name="endDate" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Upload -->
+            <div class="field">
+                <label class="label">Upload Photos</label>
+                <div class="control">
+                    <div class="file has-name is-medium">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="photos" multiple>
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">Choose files…</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary is-fullwidth is-medium" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
 </html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Add Vacation Point</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Add Vacation Point</h1>-->
+<!--<form method="POST" action="/admin_panel/add_vacation_point" enctype="multipart/form-data">-->
+<!--    <input type="hidden" name="_csrf" th:value="${_csrf.token}">-->
+<!--    <input type="text" name="city" placeholder="City" required>-->
+<!--    <input type="text" name="country" placeholder="Country" required>-->
+<!--    <textarea name="description" placeholder="Description" required></textarea>-->
+<!--    <label for="startDate">Start Date and Time:</label>-->
+<!--    <input type="date" name="startDate" required>-->
+<!--    <label for="endDate">End Date and Time:</label>-->
+<!--    <input type="date" name="endDate" required>-->
+<!--    <input type="file" name="photos" multiple>-->
+<!--    <button type="submit">Submit</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -45,13 +46,6 @@ public class AdminController {
         return "admin/admin_panel";
     }
 
-    @GetMapping("/hero_settings")
-    public String getHeroSettings(Model model) {
-        HeroSettings heroSettings = heroSettingsRepository.findAll().stream().findFirst().orElse(null);
-        model.addAttribute("heroSettings", heroSettings);
-        return "admin_panel";
-    }
-
     @PostMapping("/hero_settings")
     public String saveHeroSettings(@RequestParam("background_image_url") String backgroundImageUrl,
                                    @RequestParam("title") String title, Model model) {
@@ -81,23 +75,6 @@ public class AdminController {
         return "/admin/edit_vacation_point";
     }
 
-    @PostMapping("/save_status/{id}")
-    public String saveStatus(@RequestParam("status") PendingLocation.Status status,
-                             @PathVariable("id") Integer id,
-                             Model model) {
-
-        PendingLocation pendingLocation = pendingLocationRepository.findById(id).orElse(null);
-
-        if (pendingLocation != null) {
-
-            pendingLocation.setStatus(status);
-            pendingLocationRepository.save(pendingLocation);
-        }
-
-
-        return "redirect:/admin_panel";
-    }
-
     @PostMapping("/edit_location")
     public String editLocation(@RequestParam Long id,
                                @RequestParam String city,
@@ -105,7 +82,7 @@ public class AdminController {
                                @RequestParam String description,
                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate,
-                               @RequestParam(required = false) MultipartFile[] photos) {
+                               @RequestParam MultipartFile[] photos) {
 
         adminService.saveVacationPoint(id, city, country, description, startDate, endDate, photos);
         return "redirect:/admin_panel";
@@ -115,5 +92,29 @@ public class AdminController {
     public String deleteLocation(@PathVariable long id) {
         adminService.deleteVacationPoint(id);
         return "redirect:/admin_panel";
+    }
+
+    @GetMapping("/add_vacation_point")
+    public String addVacationPointForm() {
+        return "admin/add_vacation_point";
+    }
+
+    @PostMapping("/add_vacation_point")
+    public String addVacationPoint(
+            @RequestParam String city,
+            @RequestParam String country,
+            @RequestParam String description,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate,
+            @RequestParam MultipartFile[] photos,
+            RedirectAttributes redirectAttributes
+    ) {
+        try {
+            adminService.saveVacationPoint(city, country, description, startDate, endDate, photos);
+            redirectAttributes.addFlashAttribute("success", "Vacation point added successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
+        }
+        return "redirect:/admin_panel/add_vacation_point";
     }
 }
