@@ -125,6 +125,7 @@ public class AdminService {
                 }
             }
             photoRepository.saveAll(photoList);
+            // photoRepository.deleteAllByVacationPoint(savedPoint);
         }
     }
 

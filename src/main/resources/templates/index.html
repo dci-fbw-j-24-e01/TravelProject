@@ -30,14 +30,24 @@
     <div class="columns">
         <div class="column" th:each="point : ${vacationPoints}">
             <div class="card">
-                <div class="card-image" th:each="point : ${point.photos}">
-                    <figure class="image is-4by3" >
-                        <img
-                                th:src="@{'/photos/'+${point}}"
-                                alt="Placeholder image"
-                        />
-                    </figure>
-                </div>
+
+                        <div class="card-image" th:each="point : ${point.photos}">
+
+                            <figure class="image is-4by3">
+
+                                <div class="slideshow-container">
+                                    <div class="mySlides fade">
+                                <img
+                                        th:src="@{'/photos/'+${point}}"
+                                        alt="Placeholder image"
+                                />
+
+                                    </div>
+                                </div>
+                            </figure>
+
+                        </div>
+
                 <div class="card-content">
                     <div class="media">
                         <div class="media-content">
@@ -88,6 +98,40 @@
     if (vacationPoints.length > 0) {
         const bounds = L.latLngBounds(vacationPoints.map(p => [p.latitude, p.longitude]));
         map.fitBounds(bounds);
+    }
+</script>
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
     }
 </script>
 </body>
