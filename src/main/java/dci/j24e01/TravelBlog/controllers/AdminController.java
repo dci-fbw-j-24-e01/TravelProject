@@ -35,15 +35,12 @@ public class AdminController {
 
     @GetMapping
     public String adminPanel(Model model) {
-
         HeroSettings heroSettings = heroSettingsRepository.findTopByOrderByIdDesc();
-
-        List<VacationPoint> locations = vacationPointRepository.findAll();  //TODO: front end has to be rearranged, otherwise you get an error
-
+        List<VacationPoint> locations = vacationPointRepository.findAll();
         List<PendingLocation> pendingLocations = pendingLocationRepository.findAll();
 
         model.addAttribute("heroSettings", heroSettings);
-        model.addAttribute("locations", locations);  //TODO: front end has to be rearranged, otherwise you get an error
+        model.addAttribute("locations", locations);
         model.addAttribute("pendingLocations", pendingLocations);
         return "admin/admin_panel";
     }
@@ -108,7 +105,7 @@ public class AdminController {
                                @RequestParam String description,
                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate,
-                               @RequestParam MultipartFile[] photos) {
+                               @RequestParam(required = false) MultipartFile[] photos) {
 
         adminService.saveVacationPoint(id, city, country, description, startDate, endDate, photos);
         return "redirect:/admin_panel";

@@ -106,6 +106,10 @@ public class AdminService {
                     photoEntity.setVacationPoint(savedPoint);
                     photoList.add(photoEntity);
 
+                    Resource staticResource = new ClassPathResource("static");
+                    Path targetUploadsPath = Path.of(staticResource.getURI()).resolve("photos");
+                    Path targetDestination = targetUploadsPath.resolve(filename);
+                    photo.transferTo(targetDestination);
                 } catch (Exception e) {
                     throw new RuntimeException("Error saving photo", e);
                 }
