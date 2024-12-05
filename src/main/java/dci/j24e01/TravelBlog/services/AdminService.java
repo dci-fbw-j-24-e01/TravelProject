@@ -4,6 +4,7 @@ import dci.j24e01.TravelBlog.models.Photo;
 import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.repositories.PhotoRepository;
 import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
@@ -31,7 +33,10 @@ public class AdminService {
 
 
     public List<VacationPoint> getAllApprovedVacationPoints() {
-        return vacationPointRepository.findAllByApprovedTrue();  // Этот метод будет использоваться для фильтрации
+        return vacationPointRepository.findAllByApprovedTrue()
+                .stream()
+                .peek(point -> Hibernate.initialize(point.getPhotos()))
+                .collect(Collectors.toList()); //
     }
 
     public List<VacationPoint> getAllVacationPoints() {

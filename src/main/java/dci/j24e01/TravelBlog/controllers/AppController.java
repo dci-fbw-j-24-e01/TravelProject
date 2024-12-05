@@ -1,5 +1,6 @@
 package dci.j24e01.TravelBlog.controllers;
 
+import dci.j24e01.TravelBlog.models.PhotoDTO;
 import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.models.Photo;
 import dci.j24e01.TravelBlog.models.VacationPointDTO;
@@ -42,7 +43,11 @@ public class AppController {
         dto.setStartDate(vacationPoint.getStartDate());
         dto.setEndDate(vacationPoint.getEndDate());
         dto.setPhotos(vacationPoint.getPhotos().stream()
-                .map(Photo::getPhotoPath)
+                .map(photo -> {
+                    PhotoDTO photoDTO = new PhotoDTO();
+                    photoDTO.setPhotoPath(photo.getPhotoPath());
+                    return photoDTO;
+                })
                 .collect(Collectors.toList()));
         return dto;
     }

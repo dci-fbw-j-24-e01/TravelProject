@@ -11,6 +11,8 @@
 
     <title>Travel Blog</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+    <script src="/js/tiny-slider.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
@@ -30,13 +32,25 @@
     <div class="columns">
         <div class="column" th:each="point : ${vacationPoints}">
             <div class="card">
-                <div class="card-image" th:each="point : ${point.photos}">
-                    <figure class="image is-4by3" >
-                        <img
-                                th:src="@{'/photos/'+${point}}"
-                                alt="Placeholder image"
-                        />
-                    </figure>
+
+<!--                <div class="card-image" th:each="point : ${point.photos}">-->
+
+<!--                        <figure class="image is-4by3">-->
+
+<!--                                <img-->
+<!--                                        th:src="@{'/photos/'+${point}}"-->
+<!--                                        alt="Placeholder image"-->
+<!--                                />-->
+
+<!--                        </figure>-->
+
+<!--                </div>-->
+                <div class="card-image">
+                    <div class="slider" th:if="${point.photos.size() > 0}">
+                        <div th:each="photo : ${point.photos}" >
+                            <img th:src="@{'/photos/' + ${photo.photoPath}}" alt="Vacation Photo">
+                        </div>
+                    </div>
                 </div>
                 <div class="card-content">
                     <div class="media">
@@ -90,5 +104,23 @@
         map.fitBounds(bounds);
     }
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sliders = document.querySelectorAll('.slider');
+        sliders.forEach(slider => {
+            tns({
+                container: slider,
+                items: 1,
+                slideBy: 'page',
+                autoplay: true,
+                controls: true,
+                nav: true,
+                autoplayButtonOutput: false
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

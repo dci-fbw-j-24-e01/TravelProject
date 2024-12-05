@@ -12,12 +12,12 @@ public class VacationPointDTO {
     private double longitude;
     private LocalDate startDate;
     private LocalDate endDate;
-    private List<String> photos;
+    private List<PhotoDTO> photos;
 
     public VacationPointDTO() {
     }
 
-    public VacationPointDTO(String city, String country, String description, double latitude, double longitude, LocalDate startDate, LocalDate endDate, List<String> photos) {
+    public VacationPointDTO(String city, String country, String description, double latitude, double longitude, LocalDate startDate, LocalDate endDate, List<PhotoDTO> photos) {
         this.city = city;
         this.country = country;
         this.description = description;
@@ -84,11 +84,11 @@ public class VacationPointDTO {
         this.endDate = endDate;
     }
 
-    public List<String> getPhotos() {
+    public List<PhotoDTO> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(List<PhotoDTO> photos) {
         this.photos = photos;
     }
 

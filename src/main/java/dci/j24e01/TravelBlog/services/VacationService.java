@@ -5,6 +5,7 @@ import dci.j24e01.TravelBlog.models.Photo;
 import dci.j24e01.TravelBlog.models.VacationPoint;
 import dci.j24e01.TravelBlog.repositories.PhotoRepository;
 import dci.j24e01.TravelBlog.repositories.VacationPointRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -16,6 +17,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class VacationService {
@@ -38,8 +40,12 @@ public class VacationService {
     }
 
     public List<VacationPoint> getAllApprovedVacationPoints() {
-        return vacationPointRepository.findAllByApprovedTrue();  // Этот метод будет использоваться для фильтрации
+        return vacationPointRepository.findAllByApprovedTrue()
+                .stream()
+                .peek(point -> Hibernate.initialize(point.getPhotos())) 
+                .collect(Collectors.toList()); //
     }
+
 
     public void saveVacationPoint(String city, String description, double latitude, double longitude, MultipartFile[] photos, String routeGeoJson)  {
         VacationPoint vacationPoint = new VacationPoint();
