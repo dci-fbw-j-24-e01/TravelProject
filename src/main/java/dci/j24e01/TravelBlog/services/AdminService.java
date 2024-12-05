@@ -96,8 +96,18 @@ public class AdminService {
         if (photos != null) {
             List<Photo> photoList = new ArrayList<>();
             for (MultipartFile photo : photos) {
+                if (photo == null || photo.isEmpty()) {
+                    continue;
+                }
                 try {
-                    String filename = UUID.randomUUID() + "." + photo.getOriginalFilename().split("\\.")[1];
+
+                    String originalFilename = photo.getOriginalFilename();
+                    String extension = originalFilename != null && originalFilename.contains(".")
+                            ? originalFilename.substring(originalFilename.lastIndexOf(".") + 1)
+                            : "";
+
+                    String filename = UUID.randomUUID() + "." + extension;
+
                     Path destination = Path.of("src/main/resources/static/photos", filename);
                     photo.transferTo(destination);
 
