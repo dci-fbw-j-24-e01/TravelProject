@@ -24,6 +24,9 @@
         </div>
 
 
+
+
+
         <form method="POST" action="/admin_panel/add_vacation_point" enctype="multipart/form-data">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
             <!-- Row for City and Country -->
@@ -102,6 +105,12 @@
             <div class="field">
                 <div class="control">
                     <button class="button is-primary is-fullwidth is-medium" type="submit">Submit</button>
+                </div>
+            </div>
+            <!-- Go Back Button -->
+            <div class="field">
+                <div class="control">
+                    <a href="/admin_panel" class="button is-light is-fullwidth">Go Back</a>
                 </div>
             </div>
         </form>
