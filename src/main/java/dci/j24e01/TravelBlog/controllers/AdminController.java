@@ -81,19 +81,16 @@ public class AdminController {
         return "/admin/edit_vacation_point";
     }
 
-    @PostMapping("/save_status/{id}")
+    @PostMapping("/save_status")
     public String saveStatus(@RequestParam("status") PendingLocation.Status status,
-                             @PathVariable("id") Integer id,
-                             Model model) {
+                             @RequestParam("id") Long id) {
 
         PendingLocation pendingLocation = pendingLocationRepository.findById(id).orElse(null);
 
         if (pendingLocation != null) {
-
             pendingLocation.setStatus(status);
             pendingLocationRepository.save(pendingLocation);
         }
-
 
         return "redirect:/admin_panel";
     }

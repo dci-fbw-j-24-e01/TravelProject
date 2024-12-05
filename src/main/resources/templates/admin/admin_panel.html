@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<header th:replace="~{fragments/header.html :: header}"> </header>
+<header th:replace="~{fragments/header.html :: header}"></header>
 
 <!-- Main Content -->
 <div class="container">
@@ -21,7 +21,7 @@
 
         <form action="/admin_panel/hero_settings" method="POST">
 
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
             <div class="field">
                 <label class="label">Background Image URL</label>
                 <div class="control">
@@ -91,15 +91,27 @@
                 <td th:text="${pendingLocation.location.description}"></td>
                 <td>
                     <!-- Dropdown for status selection -->
-                    <form th:action="@{'/admin_panel/save_status/' + ${pendingLocation.id}}" method="post" style="display:inline;">
+                    <form action="/admin_panel/save_status" method="post"
+                          style="display:inline;">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                        <input type="hidden" name="id" th:value="${pendingLocation.id}"/>
                         <div class="select">
                             <select name="status">
-                                <option th:value="PENDING" th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).PENDING.name()}"
-                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).PENDING}">Pending</option>
-                                <option th:value="APPROVED" th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).APPROVED.name()}"
-                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).APPROVED}">Approved</option>
-                                <option th:value="REJECTED" th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).REJECTED.name()}"
-                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).REJECTED}">Rejected</option>
+                                <option th:value="PENDING"
+                                        th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).PENDING.name()}"
+                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).PENDING}">
+                                    Pending
+                                </option>
+                                <option th:value="APPROVED"
+                                        th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).APPROVED.name()}"
+                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).APPROVED}">
+                                    Approved
+                                </option>
+                                <option th:value="REJECTED"
+                                        th:text="${T(dci.j24e01.TravelBlog.models.PendingLocation.Status).REJECTED.name()}"
+                                        th:selected="${pendingLocation.status == T(dci.j24e01.TravelBlog.models.PendingLocation.Status).REJECTED}">
+                                    Rejected
+                                </option>
                             </select>
                         </div>
                         <button class="button is-info">Save</button>
@@ -109,7 +121,6 @@
             </tbody>
         </table>
     </div>
-
 
 
 </div>
