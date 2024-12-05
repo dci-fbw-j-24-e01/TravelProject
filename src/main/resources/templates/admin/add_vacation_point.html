@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +16,13 @@
         <h1 class="title">Add Vacation Point</h1>
 
         <!-- Success and Error Notifications -->
-        <div class="notification is-success" th:if="${param.success}">
+        <div class="notification is-success" th:if="${success}">
             Vacation point added successfully!
         </div>
-        <div class="notification is-danger" th:if="${param.error}">
+        <div class="notification is-danger" th:if="${error}">
             An error occurred. Please try again.
         </div>
+
 
         <form method="POST" action="/admin_panel/add_vacation_point" enctype="multipart/form-data">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
