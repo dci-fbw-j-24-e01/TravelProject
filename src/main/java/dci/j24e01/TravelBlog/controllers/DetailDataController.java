@@ -94,11 +94,10 @@ public class DetailDataController {
     @GetMapping("/detail/{id}")
     public String getDetailById(@PathVariable Long id, Model model) {
         System.out.println("Received request for detail page with ID: " + id); // for debugging
-        DetailData detailData = detailDataService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "DetailData not found"));
+        VacationPoint detailData = vacationService.getVacationPointById(id);
 
         // Fetch weather data
-        Map<String, Object> weatherData = weatherService.getWeather(detailData.getCityName());
+        Map<String, Object> weatherData = weatherService.getWeather(detailData.getCity());
         if (weatherData != null && weatherData.containsKey("main")) {
             Map<String, Object> mainData = (Map<String, Object>) weatherData.get("main");
             if (mainData != null && mainData.containsKey("temp")) {

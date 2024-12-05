@@ -15,6 +15,7 @@ public class DetailDataService {
     private final VacationPointRepository vacationPointRepository;
 
 
+
     @Autowired
     public DetailDataService(VacationPointRepository vacationPointRepository,
                              DetailDataRepository detailDataRepository) {
@@ -23,8 +24,8 @@ public class DetailDataService {
         this.detailDataRepository = detailDataRepository;
     }
 
-    public Optional<DetailData> findById(Long id) {
-        return detailDataRepository.findById(id);
+    public Optional<VacationPoint> findById(Long id) {
+        return vacationPointRepository.findById(id);
     }
 
     public void saveDetailData(DetailData detailData) {
