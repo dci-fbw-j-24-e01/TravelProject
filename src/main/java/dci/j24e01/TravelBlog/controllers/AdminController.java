@@ -38,12 +38,12 @@ public class AdminController {
 
         HeroSettings heroSettings = heroSettingsRepository.findTopByOrderByIdDesc();
 
-//        List<Location> locations = locationRepository.findAll();  //TODO: front end has to be rearranged, otherwise you get an error
+        List<VacationPoint> locations = vacationPointRepository.findAll();  //TODO: front end has to be rearranged, otherwise you get an error
 
         List<PendingLocation> pendingLocations = pendingLocationRepository.findAll();
 
         model.addAttribute("heroSettings", heroSettings);
-//        model.addAttribute("locations", locations);  //TODO: front end has to be rearranged, otherwise you get an error
+        model.addAttribute("locations", locations);  //TODO: front end has to be rearranged, otherwise you get an error
         model.addAttribute("pendingLocations", pendingLocations);
         return "admin/admin_panel";
     }
