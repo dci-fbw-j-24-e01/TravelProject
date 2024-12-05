@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Vacation Point</title>
     <link rel="stylesheet" href="/css/bulma.min.css">
+    <link rel="stylesheet" href="css/add-edit-page.css">
 
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
 </head>
@@ -68,20 +69,31 @@
                 <div class="column">
                     <div class="field">
                         <label class="label">Start Date</label>
-                        <div class="control">
+                        <div class="control has-icons-right">
                             <input class="input is-medium" type="date" name="startDate" required>
+                            <!-- Custom Calendar Icon -->
+                            <span class="icon is-small is-right">
+                    <i class="fas fa-calendar-alt"></i>
+                </span>
                         </div>
                     </div>
                 </div>
                 <div class="column">
                     <div class="field">
                         <label class="label">End Date</label>
-                        <div class="control">
+                        <div class="control has-icons-right">
                             <input class="input is-medium" type="date" name="endDate" required>
+                            <!-- Custom Calendar Icon -->
+                            <span class="icon is-small is-right">
+                    <i class="fas fa-calendar-alt"></i>
+                </span>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
 
             <!-- File Upload -->
             <div class="field">
