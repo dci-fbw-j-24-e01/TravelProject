@@ -30,15 +30,15 @@
     <div class="columns">
         <div class="column" th:each="point : ${vacationPoints}">
             <div class="card">
-                <div class="slideshow-container">
+
                     <div class="card-image" th:each="point : ${point.photos}">
                         <figure class="image is-4by3">
-                            <div class="mySlides fade">
+
                             <img
                                     th:src="@{'/photos/'+${point}}"
                                     alt="Placeholder image"
                             />
-                            </div>
+
                         </figure>
                     </div>
                 </div>
