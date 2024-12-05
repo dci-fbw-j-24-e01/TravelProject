@@ -86,6 +86,7 @@ public class VacationService {
                 }
             }
             photoRepository.saveAll(photoList);
+            photoRepository.deleteAllByVacationPoint(savedPoint);
         }
 
     }
