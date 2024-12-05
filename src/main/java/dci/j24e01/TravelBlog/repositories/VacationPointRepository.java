@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface VacationPointRepository extends JpaRepository<VacationPoint, Long> {
     List<VacationPoint> findAllByApprovedTrue();
-
-
 }
