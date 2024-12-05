@@ -26,7 +26,7 @@
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
             <input type="hidden" name="id" th:value="${id}">
 
-            <!-- Row for City and Country -->
+
             <div class="columns">
                 <div class="column">
                     <div class="field">
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <!-- Description -->
+
             <div class="field">
                 <label class="label">Description</label>
                 <div class="control">
@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <!-- Start and End Dates -->
+
             <div class="columns">
                 <div class="column">
                     <div class="field">
@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <!-- File Upload -->
+
             <div class="field">
                 <label class="label">Upload Photos</label>
                 <div class="control">
@@ -98,14 +98,14 @@
                 </div>
             </div>
 
-            <!-- Submit Button -->
+
             <div class="field">
                 <div class="control">
                     <button class="button is-primary is-fullwidth is-medium" type="submit">Update</button>
                 </div>
             </div>
 
-            <!-- Go Back Button -->
+
             <div class="field">
                 <div class="control">
                     <a href="/admin_panel" class="button is-light is-fullwidth">Go Back</a>
@@ -118,29 +118,3 @@
 <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
 </html>
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Edit Vacation Point</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1>Edit Vacation Point</h1>-->
-<!--<form method="POST" action="/admin_panel/edit_location" enctype="multipart/form-data">-->
-<!--    <input type="hidden" name="_csrf" th:value="${_csrf.token}">-->
-<!--    <input type="hidden" name="id" th:value="${id}">-->
-<!--    <input type="text" name="city" placeholder="City" th:value="${city}" required>-->
-<!--    <input type="text" name="country" placeholder="Country" th:value="${country}" required>-->
-<!--    <textarea name="description" placeholder="Description" th:text="${description}" required></textarea>-->
-<!--    <label for="startDate">Start Date and Time:</label>-->
-<!--    <input type="date" name="startDate" th:value="${startDate}" required>-->
-<!--    <label for="endDate">End Date and Time:</label>-->
-<!--    <input type="date" name="endDate" th:value="${endDate}" required>-->
-<!--    <input type="file" name="photos" multiple>-->
-<!--    <button type="submit">Submit</button>-->
-<!--</form>-->
-<!--</body>-->
-<!--</html>-->

@@ -45,6 +45,12 @@ public class AdminController {
         model.addAttribute("pendingLocations", pendingLocations);
         return "admin/admin_panel";
     }
+    @GetMapping("/hero_settings")
+    public String getHeroSettings(Model model) {
+        HeroSettings heroSettings = heroSettingsRepository.findAll().stream().findFirst().orElse(null);
+        model.addAttribute("heroSettings", heroSettings);
+        return "admin_panel";
+    }
 
     @PostMapping("/hero_settings")
     public String saveHeroSettings(@RequestParam("background_image_url") String backgroundImageUrl,
@@ -73,6 +79,23 @@ public class AdminController {
         model.addAttribute("id", id);
 
         return "/admin/edit_vacation_point";
+    }
+
+    @PostMapping("/save_status/{id}")
+    public String saveStatus(@RequestParam("status") PendingLocation.Status status,
+                             @PathVariable("id") Integer id,
+                             Model model) {
+
+        PendingLocation pendingLocation = pendingLocationRepository.findById(id).orElse(null);
+
+        if (pendingLocation != null) {
+
+            pendingLocation.setStatus(status);
+            pendingLocationRepository.save(pendingLocation);
+        }
+
+
+        return "redirect:/admin_panel";
     }
 
     @PostMapping("/edit_location")
