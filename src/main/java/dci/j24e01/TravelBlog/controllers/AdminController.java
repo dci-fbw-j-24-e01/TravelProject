@@ -35,14 +35,24 @@ public class AdminController {
 
     @GetMapping
     public String adminPanel(Model model) {
+
         HeroSettings heroSettings = heroSettingsRepository.findTopByOrderByIdDesc();
-        List<VacationPoint> locations = vacationPointRepository.findAll();
+
+//        List<Location> locations = locationRepository.findAll();  //TODO: front end has to be rearranged, otherwise you get an error
+
         List<PendingLocation> pendingLocations = pendingLocationRepository.findAll();
 
         model.addAttribute("heroSettings", heroSettings);
-        model.addAttribute("locations", locations);
+//        model.addAttribute("locations", locations);  //TODO: front end has to be rearranged, otherwise you get an error
         model.addAttribute("pendingLocations", pendingLocations);
         return "admin/admin_panel";
+    }
+
+    @GetMapping("/hero_settings")
+    public String getHeroSettings(Model model) {
+        HeroSettings heroSettings = heroSettingsRepository.findAll().stream().findFirst().orElse(null);
+        model.addAttribute("heroSettings", heroSettings);
+        return "admin_panel";
     }
 
     @PostMapping("/hero_settings")
@@ -72,6 +82,23 @@ public class AdminController {
         model.addAttribute("id", id);
 
         return "/admin/edit_vacation_point";
+    }
+
+    @PostMapping("/save_status/{id}")
+    public String saveStatus(@RequestParam("status") PendingLocation.Status status,
+                             @PathVariable("id") Integer id,
+                             Model model) {
+
+        PendingLocation pendingLocation = pendingLocationRepository.findById(id).orElse(null);
+
+        if (pendingLocation != null) {
+
+            pendingLocation.setStatus(status);
+            pendingLocationRepository.save(pendingLocation);
+        }
+
+
+        return "redirect:/admin_panel";
     }
 
     @PostMapping("/edit_location")

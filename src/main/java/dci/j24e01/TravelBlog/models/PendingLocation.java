@@ -1,8 +1,11 @@
 package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class PendingLocation {
@@ -11,18 +14,17 @@ public class PendingLocation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String city;
-    private String country;
-    private Date visitDate;
-    private String description;
-
-
-
+    @OneToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.PENDING;
 
+    @CreationTimestamp
     private Date createdAt;
+
+    @UpdateTimestamp
     private Date updatedAt;
 
     public enum Status {
@@ -39,39 +41,13 @@ public class PendingLocation {
         this.id = id;
     }
 
-    public String getCity() {
-        return city;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(Location location) {
+        this.location = location;
     }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public Date getVisitDate() {
-        return visitDate;
-    }
-
-    public void setVisitDate(Date visitDate) {
-        this.visitDate = visitDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-
 
     public Status getStatus() {
         return status;
@@ -97,4 +73,26 @@ public class PendingLocation {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        PendingLocation that = (PendingLocation) o;
+        return Objects.equals(id, that.id) && Objects.equals(location, that.location) && status == that.status && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, location, status, createdAt, updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "PendingLocation{" +
+                "id=" + id +
+                ", location=" + location +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

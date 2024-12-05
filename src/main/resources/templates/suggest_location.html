@@ -13,7 +13,7 @@
     <div class="container">
         <h1 class="title">Suggest a New Location</h1>
 
-
+<!--        To check if it was successful or not:-->
         <div class="notification is-success" th:if="${param.success}">
             Location has been submitted successfully!
         </div>
@@ -22,47 +22,48 @@
         </div>
 
         <form method="POST" th:action="@{/suggest-location}" th:object="${location}">
-            <div class="field">
-                <label class="label">City</label>
-                <div class="control">
-                    <input class="input" type="text" th:field="*{city}" placeholder="Enter city name" required>
+
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">City</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-medium" type="text" th:field="*{city}" placeholder="Enter city name" required>
+                            <span class="icon is-small is-left">
+                        <i class="fas fa-city"></i>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Country</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-medium" type="text" th:field="*{country}" placeholder="Enter country name" required>
+                            <span class="icon is-small is-left">
+                        <i class="fas fa-flag"></i>
+                    </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+
             <div class="field">
-                <label class="label">Country</label>
+                <label class="label">Description</label>
                 <div class="control">
-                    <input class="input" type="text" th:field="*{country}" placeholder="Enter country name" required>
+                    <textarea class="textarea is-medium" th:field="*{description}" placeholder="Enter a description" required></textarea>
                 </div>
             </div>
 
-            <div class="field">
-                <label class="label">Latitude</label>
-                <div class="control">
-                    <input class="input" type="number" step="any" th:field="*{latitude}" placeholder="Enter latitude">
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Longitude</label>
-                <div class="control">
-                    <input class="input" type="number" step="any" th:field="*{longitude}" placeholder="Enter longitude">
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Thumbnail URL</label>
-                <div class="control">
-                    <input class="input" type="url" th:field="*{thumbnailUrl}" placeholder="Enter thumbnail URL">
-                </div>
-            </div>
 
             <div class="field">
                 <div class="control">
-                    <button class="button is-primary" type="submit">Save</button>
+                    <button class="button is-primary is-fullwidth is-medium" type="submit">Save</button>
                 </div>
             </div>
         </form>
+
     </div>
 </section>
 
