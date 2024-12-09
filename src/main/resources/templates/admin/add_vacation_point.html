@@ -8,6 +8,28 @@
     <link rel="stylesheet" href="css/add-edit-page.css">
 
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+    <style>
+        .suggestions {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            background-color: white;
+            z-index: 1000;
+        }
+
+        .suggestions li {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .suggestions li:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
@@ -36,7 +58,9 @@
                     <div class="field">
                         <label class="label">City</label>
                         <div class="control has-icons-left">
-                            <input class="input is-medium" type="text" name="city" placeholder="Enter city name" required>
+                            <input class="input is-medium" type="text" name="city" placeholder="Enter city name" required oninput="fetchSuggestions('city', this.value)">
+                            <ul id="citySuggestions" class="suggestions"></ul>
+
                             <span class="icon is-small is-left">
                                 <i class="fas fa-city"></i>
                             </span>
@@ -47,7 +71,8 @@
                     <div class="field">
                         <label class="label">Country</label>
                         <div class="control has-icons-left">
-                            <input class="input is-medium" type="text" name="country" placeholder="Enter country name" required>
+                            <input class="input is-medium" type="text" name="country" placeholder="Enter country name" required oninput="fetchSuggestions('country', this.value)">
+                            <ul id="countrySuggestions" class="suggestions"></ul>
                             <span class="icon is-small is-left">
                                 <i class="fas fa-flag"></i>
                             </span>
@@ -130,6 +155,51 @@
 </section>
 
 <footer th:replace="~{fragments/footer.html :: footer}"></footer>
+<script>
+    async function fetchSuggestions(type, query) {
+        const suggestionsElement = document.getElementById(`${type}Suggestions`);
+        if (query.length < 3) {
+            suggestionsElement.innerHTML = '';
+            return;
+        }
+
+        const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&accept-language=en&q=${encodeURIComponent(query)}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+
+            suggestionsElement.innerHTML = '';
+
+
+            data.forEach((item) => {
+                let suggestionText = '';
+                if (type === 'city' && item.address.city) {
+                    suggestionText = item.address.city;
+                } else if (type === 'country' && item.address.country) {
+                    suggestionText = item.address.country;
+                }
+
+                if (suggestionText) {
+                    const li = document.createElement('li');
+                    li.textContent = suggestionText;
+                    li.onclick = () => selectSuggestion(type, suggestionText);
+                    suggestionsElement.appendChild(li);
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+        }
+    }
+
+    function selectSuggestion(type, value) {
+        document.getElementById(type).value = value;
+        document.getElementById(`${type}Suggestions`).innerHTML = '';
+    }
+
+
+</script>
 </body>
 </html>
 
