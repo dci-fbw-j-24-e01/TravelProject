@@ -96,29 +96,7 @@ public class AppController {
         return "redirect:/";
     }
 
-    @GetMapping("/admin_panel/add_vacation_point")
-    public String addVacationPointForm() {
-        return "admin/add_vacation_point";
-    }
 
-    @PostMapping("/admin_panel/add_vacation_point")
-    public String addVacationPoint(
-            @RequestParam String city,
-            @RequestParam String country,
-            @RequestParam String description,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate,
-            @RequestParam MultipartFile[] photos,
-            RedirectAttributes redirectAttributes
-    ) {
-        try {
-            adminService.saveVacationPoint(city, country, description, startDate, endDate, photos);
-            redirectAttributes.addFlashAttribute("success", "Vacation point added successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
-        }
-        return "redirect:/admin_panel/add_vacation_point";
-    }
 
     @GetMapping("/vacation_points")
     @ResponseBody
