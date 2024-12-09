@@ -19,7 +19,7 @@
     <div class="container">
         <!-- Location Header -->
         <div class="content has-text-centered">
-            <h1 class="title" th:text="${detailData.cityName} + ', ' + ${detailData.countryName}">City, Country</h1>
+            <h1 class="title" th:text="${detailData.city} + ', ' + ${detailData.country}">City, Country</h1>
             <p class="subtitle">
                 <span class="icon"><i class="fas fa-calendar-alt"></i></span>
                 from <strong th:text="${detailData.startDate}">Start Date</strong> to <strong
@@ -30,7 +30,7 @@
         <!-- Slideshow -->
         <div class="slideshow-container">
             <div class="mySlides" th:each="url, iterStat : ${detailData.photos}">
-                <img th:src="${url.photoPath}" style="width:100%" alt="Gallery Image">
+                <img th:src="@{'/photos/' + ${url.photoPath}}" style="width:100%" alt="Gallery Image">
             </div>
 
             <!-- Navigation -->
@@ -114,7 +114,7 @@
 
         <!-- Weather Section -->
         <div class="box has-text-centered">
-            <h2 class="title is-4">Current Weather in <span th:text="${detailData.cityName}">City</span></h2>
+            <h2 class="title is-4">Current Weather in <span th:text="${detailData.city}">City</span></h2>
             <p class="subtitle is-6">
                 <span class="icon"><i class="fas fa-cloud"></i></span>
                 <span th:text="${weatherData['main']['tempFormatted']} + '°C'">Temperature</span>

@@ -2,7 +2,8 @@ package dci.j24e01.TravelBlog.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,15 +32,15 @@ public class DetailData {
 
 
     @Column(updatable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
-    private LocalDate updatedAt;
+    private LocalDateTime updatedAt;
 
     public DetailData() {
 
     }
 
-    public DetailData(Long id, String cityName, String countryName, LocalDate startDate, LocalDate endDate, String description, double latitude, double longitude, List<Photo> photos, VacationPoint vacationPoint, LocalDate createdAt, LocalDate updatedAt) {
+    public DetailData(Long id, String cityName, String countryName, LocalDate startDate, LocalDate endDate, String description, double latitude, double longitude, List<Photo> photos, VacationPoint vacationPoint, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.cityName = cityName;
         this.countryName = countryName;
@@ -119,6 +120,9 @@ public class DetailData {
     }
 
     public List<Photo> getPhotos() {
+        if (photos == null) {
+            photos = new ArrayList<>();
+        }
         return photos;
     }
 
@@ -126,19 +130,19 @@ public class DetailData {
         this.photos = photos;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -152,13 +156,13 @@ public class DetailData {
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDate.now();
-        this.updatedAt = LocalDate.now();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = LocalDate.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     @Override

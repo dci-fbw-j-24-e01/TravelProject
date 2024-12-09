@@ -37,10 +37,10 @@
                         <input type="text" name="countryName" th:value="${point.country ?: ''}" required>
                     </td>
                     <td>
-                        <input type="datetime-local" name="startDate" th:value="${point.startDate}" required>
+                        <input type="date" name="startDate" th:value="${point.startDate}" required>
                     </td>
                     <td>
-                        <input type="datetime-local" name="endDate" th:value="${point.endDate}" required>
+                        <input type="date" name="endDate" th:value="${point.endDate}" required>
                     </td>
                     <td>
                         <textarea name="description" th:text="${point.description ?: ''}" required></textarea>
