@@ -85,7 +85,9 @@ public class VacationService {
                     e.printStackTrace();
                 }
             }
+
             photoRepository.saveAll(photoList);
+
         }
 
     }

@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PendingLocationRepository extends JpaRepository<PendingLocation, Integer> {
+public interface PendingLocationRepository extends JpaRepository<PendingLocation, Long> {
 
 }
